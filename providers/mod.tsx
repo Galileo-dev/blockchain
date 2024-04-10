@@ -6,6 +6,7 @@ import { WagmiProvider, type State } from "wagmi";
 
 import { ThemeProvider } from "@/components/theme-provider";
 import { config } from "@/lib/config";
+import { ConnectKitProvider } from "connectkit";
 
 type Props = {
   children: ReactNode;
@@ -24,7 +25,7 @@ export function Providers({ children, initialState }: Props) {
     >
       <WagmiProvider config={config} initialState={initialState}>
         <QueryClientProvider client={queryClient}>
-          {children}
+          <ConnectKitProvider theme="midnight">{children}</ConnectKitProvider>
         </QueryClientProvider>
       </WagmiProvider>
     </ThemeProvider>

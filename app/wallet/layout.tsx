@@ -1,12 +1,21 @@
+"use client";
+
 import { Separator } from "@/components/ui/separator";
 import "@/styles/globals.css";
+import { redirect } from "next/navigation";
+import { useAccount } from "wagmi";
 import DashboardMenu from "./wallet-menu";
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // redirect to /wallets if no wallet is selected
+  const { isConnected } = useAccount();
+  if (!isConnected) {
+    return redirect("/wallets");
+  }
   return (
     <>
       <div className="space-x container mb-5 mt-5 flex flex-1 flex-col">
