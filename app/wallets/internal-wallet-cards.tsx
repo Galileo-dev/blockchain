@@ -25,16 +25,19 @@ const fakeWallets: {
 
 type InternalWalletCardsProps = {
   wallets: PrivateKeyAccount[];
+  changeWalletHandler: (wallet: PrivateKeyAccount) => void;
 };
 
 export default function InternalWalletCards({
   wallets,
+  changeWalletHandler,
 }: InternalWalletCardsProps) {
   return (
     <>
       {wallets.map((wallet, index) => (
         <WalletCard
           key={index}
+          onClick={() => changeWalletHandler(wallet)}
           wallet={{ address: wallet.address, token: "seth" }}
         />
       ))}

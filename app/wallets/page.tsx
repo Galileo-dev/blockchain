@@ -1,34 +1,35 @@
 "use client";
 
 import { Separator } from "@/components/ui/separator";
-import { useEffect, useState } from "react";
+import { customConnector } from "@/lib/customConnector";
+import useLocalStorage from "@/lib/localstorage";
+import { useEffect } from "react";
 import { PrivateKeyAccount } from "viem";
-import { useDisconnect } from "wagmi";
+import { useConnect, useDisconnect } from "wagmi";
 import ExternalWalletCard from "./external-wallet-card";
 import { ImportWalletTrigger } from "./import-wallet-trigger";
 import InternalWalletCards from "./internal-wallet-cards";
 import { NewWalletTrigger } from "./new-wallet-trigger";
 
 export default function Page() {
+  const { connectors, connect } = useConnect();
   const { disconnect } = useDisconnect();
 
   useEffect(() => {
     disconnect();
   }, [disconnect]);
 
-  const [wallets, setWallets] = useState<PrivateKeyAccount[]>([]);
-
-  useEffect(() => {
-    const wallets = JSON.parse(localStorage.getItem("wallets") || "[]");
-    setWallets(wallets);
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem("wallets", JSON.stringify(wallets));
-  }, [wallets]);
+  const [wallets, setWallets] = useLocalStorage<PrivateKeyAccount[]>(
+    "wallets",
+    []
+  );
 
   function addWallet(account: PrivateKeyAccount) {
-    setWallets([...wallets, account]);
+    setWallets((prevWallets) => [...prevWallets, account]);
+  }
+
+  async function connectCustomWallet(account: PrivateKeyAccount) {
+    connect({ chainId: 11155111, connector: customConnector() }); // sepolia
   }
 
   return (
@@ -44,7 +45,10 @@ export default function Page() {
         <Separator className="w-9/10 my-2" />
         <div className="flex flex-1 flex-col space-y-8 lg:flex-row lg:space-x-12 lg:space-y-0">
           <div className="flex-1 space-y-2">
-            <InternalWalletCards wallets={wallets} />
+            <InternalWalletCards
+              wallets={wallets}
+              changeWalletHandler={connectCustomWallet}
+            />
             <ExternalWalletCard />
           </div>
         </div>

@@ -10,14 +10,16 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { generateWallet } from "@/lib/web3";
+import { generateKeyStoreFile, generateWallet } from "@/lib/web3";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Download } from "lucide-react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Address, PrivateKeyAccount, privateKeyToAccount } from "viem/accounts";
+import { KeyStore } from "web3";
 import { z } from "zod";
 
 const formSchema = z.object({
-  key_store_file: z.instanceof(File),
   password: z.string(),
 });
 
@@ -26,6 +28,8 @@ type NewWalletDialogProps = {
 };
 
 export function NewWalletDialog({ handler }: NewWalletDialogProps) {
+  const [keystore, setKeystore] = useState<KeyStore | undefined>();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     mode: "onBlur",
@@ -34,12 +38,24 @@ export function NewWalletDialog({ handler }: NewWalletDialogProps) {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: z.infer<typeof formSchema>) {
     // generate a wallet and add it to wallets in local storage
     const wallet = generateWallet();
     const account = privateKeyToAccount(wallet.privateKey as Address);
-
     handler(account);
+
+    const keystore = await generateKeyStoreFile(wallet, values.password);
+    setKeystore(keystore);
+  }
+
+  function downloadKeystore() {
+    const jsonString = `data:text/json;chatset=utf-8,${encodeURIComponent(
+      JSON.stringify(keystore)
+    )}`;
+    const link = document.createElement("a");
+    link.href = jsonString;
+    link.download = "keystore.json";
+    link.click();
   }
 
   return (
@@ -60,6 +76,18 @@ export function NewWalletDialog({ handler }: NewWalletDialogProps) {
         />
         <Button type="submit">Generate</Button>
       </form>
+      {keystore && (
+        <div className=" flex items-center space-x-4 rounded-md border p-4">
+          <Download />
+          <div className="flex-1 space-y-1">
+            <p className="text-sm font-medium leading-none">Key Store</p>
+            <p className="text-sm text-muted-foreground">
+              You should keep this in a safe place.
+            </p>
+          </div>
+          <Button onClick={downloadKeystore}>Download</Button>
+        </div>
+      )}
     </Form>
   );
 }

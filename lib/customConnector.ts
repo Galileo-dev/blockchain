@@ -42,7 +42,6 @@ export function customConnector({}: CustomConnectorParameters = {}) {
         const chain = await this.switchChain!({ chainId });
         currentChainId = chain.id;
       }
-
       connected = true;
 
       return { accounts, chainId: currentChainId };
@@ -99,7 +98,10 @@ export function customConnector({}: CustomConnectorParameters = {}) {
       const request: EIP1193RequestFn = async ({ method, params }) => {
         // eth methods
         if (method === "eth_chainId") return numberToHex(connectedChainId);
-        if (method === "eth_requestAccounts") return ["0x123..234"]; // TODO(): Retrieve accounts from local storage
+        if (method === "eth_requestAccounts") {
+          const accounts = localStorage.getItem("wallets");
+          return accounts ? JSON.parse(accounts) : [];
+        }
         if (method === "eth_signTypedData_v4") {
           // TODO(): Implement this method
           console.log("eth_signTypedData_v4 not implemented");

@@ -13,15 +13,16 @@ type WalletCardProps = {
     address: string;
     token: string;
   };
+  onClick: () => void;
 };
 
-export default function WalletCard({ wallet }: WalletCardProps) {
+export default function WalletCard({ wallet, onClick }: WalletCardProps) {
   const router = useRouter();
 
   return (
     <>
       <Card>
-        <CardHeader onClick={() => router.push(`/wallet`)}>
+        <CardHeader onClick={onClick}>
           <CardTitle>{wallet.address}</CardTitle>
           <CardDescription>{wallet.token}</CardDescription>
         </CardHeader>

@@ -26,6 +26,7 @@
     "@tsparticles/react": "^3.0.0",
     "@tsparticles/slim": "^3.3.0",
     "@types/nodemailer": "^6.4.14",
+    "@wagmi/core": "^2.6.16",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
     "connectkit": "^1.7.3",
