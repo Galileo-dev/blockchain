@@ -1,4 +1,5 @@
 import {
+  PrivateKeyAccount,
   RpcRequestError,
   SwitchChainError,
   custom,
@@ -29,7 +30,7 @@ export function customConnector({}: CustomConnectorParameters = {}) {
     name: "Custom Connector",
     type: customConnector.type,
     async setup() {
-      connectedChainId = config.chains[0].id;
+      connectedChainId = config.chains[1].id;
     },
     async connect({ chainId } = {}) {
       const provider = await this.getProvider();
@@ -57,6 +58,7 @@ export function customConnector({}: CustomConnectorParameters = {}) {
     async getChainId() {
       const provider = await this.getProvider();
       const hexChainId = await provider.request({ method: "eth_chainId" });
+      console.log("hexChainId", hexChainId);
       return fromHex(hexChainId, "number");
     },
     async isAuthorized() {
@@ -96,11 +98,20 @@ export function customConnector({}: CustomConnectorParameters = {}) {
       const url = chain.rpcUrls.default.http[0]!;
 
       const request: EIP1193RequestFn = async ({ method, params }) => {
+        console.log("request", method, params);
         // eth methods
         if (method === "eth_chainId") return numberToHex(connectedChainId);
         if (method === "eth_requestAccounts") {
-          const accounts = localStorage.getItem("wallets");
-          return accounts ? JSON.parse(accounts) : [];
+          console.log("eth_requestAccounts not implemented");
+          const localStorageWallets = localStorage.getItem("wallets");
+          if (!localStorageWallets) return [];
+          const accounts = JSON.parse(localStorageWallets).map(
+            (x: PrivateKeyAccount) => {
+              return x.address;
+            }
+          );
+          console.log("accounts", accounts);
+          return accounts;
         }
         if (method === "eth_signTypedData_v4") {
           // TODO(): Implement this method

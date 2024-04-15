@@ -6,7 +6,7 @@ import { mainnet, sepolia } from "wagmi/chains";
 
 export const config = createConfig(
   getDefaultConfig({
-    chains: [mainnet],
+    chains: [mainnet, sepolia],
     ssr: true,
     storage: createStorage({
       storage: cookieStorage,
