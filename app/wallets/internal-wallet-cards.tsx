@@ -1,13 +1,12 @@
 "use client";
 
 import { customConnector } from "@/lib/customConnector";
-import { Wallet } from "@/types/wallet";
+import { Wallet, Wallets } from "@/types/wallet";
 import { useConnect } from "wagmi";
-import { KeyStore } from "web3";
 import WalletCard from "./wallet-card";
 
 type InternalWalletCardsProps = {
-  wallets: KeyStore[];
+  wallets: Wallets;
 };
 
 export default function InternalWalletCards({
