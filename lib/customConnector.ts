@@ -30,7 +30,7 @@ export function customConnector({}: CustomConnectorParameters = {}) {
     name: "Custom Connector",
     type: customConnector.type,
     async setup() {
-      connectedChainId = config.chains[1].id;
+      connectedChainId = config.chains[0].id;
     },
     async connect({ chainId } = {}) {
       const provider = await this.getProvider();

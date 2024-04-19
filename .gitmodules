@@ -1,0 +1,6 @@
+[submodule "services/blockscout"]
+	path = services/blockscout
+	url = https://github.com/blockscout/blockscout
+[submodule "services/eth-pos-devnet"]
+	path = services/eth-pos-devnet
+	url = https://github.com/Offchainlabs/eth-pos-devnet

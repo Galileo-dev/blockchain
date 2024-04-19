@@ -1,13 +1,23 @@
 "use client";
 
-import { useAccount } from "wagmi";
+import { useAccount, useBalance } from "wagmi";
 
 export default function Wallet() {
   const { address, chain } = useAccount();
+
+  const balance = useBalance({
+    address,
+  });
   return (
     <>
       <h1>Wallet: {address}</h1>
       {chain && <p>Chain: {chain.name}</p>}
+      {balance.data && (
+        <p>
+          Balance: {balance.data.formatted}&nbsp;
+          {balance.data.symbol}
+        </p>
+      )}
     </>
   );
 }
