@@ -1,7 +1,9 @@
+import { Wallet } from "@/types/wallet";
+import { getWalletClient } from "@wagmi/core";
 import {
-  PrivateKeyAccount,
   RpcRequestError,
   SwitchChainError,
+  UserRejectedRequestError,
   custom,
   fromHex,
   getAddress,
@@ -14,6 +16,9 @@ import {
 } from "viem";
 import { rpc } from "viem/utils";
 import { ChainNotConfiguredError, createConnector } from "wagmi";
+import { KeyStore } from "web3";
+import { config as wagmiConfig } from "./config";
+import { getAccountFromKeyStore } from "./web3";
 
 export type CustomConnectorParameters = {};
 
@@ -102,22 +107,48 @@ export function customConnector({}: CustomConnectorParameters = {}) {
         // eth methods
         if (method === "eth_chainId") return numberToHex(connectedChainId);
         if (method === "eth_requestAccounts") {
-          console.log("eth_requestAccounts not implemented");
           const localStorageWallets = localStorage.getItem("wallets");
           if (!localStorageWallets) return [];
-          const accounts = JSON.parse(localStorageWallets).map(
-            (x: PrivateKeyAccount) => {
-              return x.address;
-            }
-          );
+          const accounts = JSON.parse(localStorageWallets).map((x: Wallet) => {
+            return !x.address.startsWith("0x") ? `0x${x.address}` : x.address;
+          });
           console.log("accounts", accounts);
           return accounts;
+        }
+        if (method === "eth_sendTransaction") {
+          type Params = [
+            { from: Hex; to: Hex; value: Hex; gas: Hex; data: Hex }
+          ];
+          const transactionParams = (params as Params)[0];
+          console.log("transactionParams", transactionParams);
+          const localStorageWallets = localStorage.getItem("wallets");
+          if (!localStorageWallets)
+            throw new UserRejectedRequestError(
+              new Error("Failed to sign message.")
+            );
+          const wallet: KeyStore = JSON.parse(localStorageWallets).find(
+            (x: KeyStore) =>
+              (!x.address.startsWith("0x")
+                ? `0x${x.address}`
+                : x.address
+              ).toLowerCase() === transactionParams.from.toLowerCase()
+          );
+          // TODO(): Prompt user to unlock wallet with password
+          const account = await getAccountFromKeyStore(wallet, "ilim");
+          const client = await getWalletClient(wagmiConfig);
+          const transactionHash = await client.sendTransaction({
+            account,
+            to: transactionParams.to,
+            value: BigInt(transactionParams.value),
+            gas: BigInt(transactionParams.gas),
+          });
+          console.log("transactionHash", transactionHash);
+          return transactionHash;
         }
         if (method === "eth_signTypedData_v4") {
           // TODO(): Implement this method
           console.log("eth_signTypedData_v4 not implemented");
         }
-        // wallet methods
         if (method === "wallet_switchEthereumChain") {
           type Params = [{ chainId: Hex }];
           connectedChainId = fromHex((params as Params)[0].chainId, "number");

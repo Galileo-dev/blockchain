@@ -7,11 +7,11 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { PrivateKeyAccount } from "viem";
+import { Wallet } from "@/types/wallet";
 import { ImportWalletDialog } from "./import-wallet-dialog";
 
 type ImportWalletTriggerProps = {
-  handler: (account: PrivateKeyAccount) => void;
+  handler: (wallet: Wallet) => void;
 };
 
 export function ImportWalletTrigger({ handler }: ImportWalletTriggerProps) {

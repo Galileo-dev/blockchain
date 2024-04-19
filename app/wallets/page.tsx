@@ -2,8 +2,8 @@
 
 import { Separator } from "@/components/ui/separator";
 import useLocalStorage from "@/lib/localstorage";
+import { Wallet, Wallets } from "@/types/wallet";
 import { useEffect } from "react";
-import { PrivateKeyAccount } from "viem";
 import { useDisconnect } from "wagmi";
 import ExternalWalletCard from "./external-wallet-card";
 import { ImportWalletTrigger } from "./import-wallet-trigger";
@@ -17,13 +17,10 @@ export default function Page() {
     disconnect();
   }, [disconnect]);
 
-  const [wallets, setWallets] = useLocalStorage<PrivateKeyAccount[]>(
-    "wallets",
-    []
-  );
+  const [wallets, setWallets] = useLocalStorage<Wallets>("wallets", []);
 
-  function addWallet(account: PrivateKeyAccount) {
-    setWallets((prevWallets) => [...prevWallets, account]);
+  function addWallet(wallet: Wallet) {
+    setWallets((prevWallets) => [...prevWallets, wallet]);
   }
 
   return (

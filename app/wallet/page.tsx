@@ -1,6 +1,7 @@
 "use client";
 
 import { useAccount, useBalance } from "wagmi";
+import { SendCrypto } from "./send-crypto";
 
 export default function Wallet() {
   const { address, chain } = useAccount();
@@ -18,6 +19,7 @@ export default function Wallet() {
           {balance.data.symbol}
         </p>
       )}
+      <SendCrypto />
     </>
   );
 }

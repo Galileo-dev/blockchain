@@ -11,10 +11,10 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { getAccountFromKeyStore } from "@/lib/web3";
+import { Wallet } from "@/types/wallet";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { PrivateKeyAccount } from "viem";
+import { KeyStore } from "web3";
 import { z } from "zod";
 
 const formSchema = z.object({
@@ -23,7 +23,7 @@ const formSchema = z.object({
 });
 
 type ImportWalletDialogProps = {
-  handler: (account: PrivateKeyAccount) => void;
+  handler: (account: Wallet) => void;
 };
 
 export function ImportWalletDialog({ handler }: ImportWalletDialogProps) {
@@ -37,14 +37,20 @@ export function ImportWalletDialog({ handler }: ImportWalletDialogProps) {
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    // read private key from file
     const reader = new FileReader();
     reader.onload = async function (e) {
-      const account = await getAccountFromKeyStore(
-        e.target?.result! as string,
-        values.password
-      );
-      handler(account);
+      let keyStore: KeyStore;
+      try {
+        keyStore = JSON.parse(e.target?.result as string);
+      } catch (error) {
+        form.setError("key_store_file", {
+          type: "manual",
+          message: "Invalid key store file",
+        });
+        return;
+      }
+
+      handler(keyStore as Wallet);
     };
     reader.readAsText(values.key_store_file);
   }

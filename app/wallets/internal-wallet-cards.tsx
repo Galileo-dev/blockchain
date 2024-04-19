@@ -1,12 +1,13 @@
 "use client";
 
 import { customConnector } from "@/lib/customConnector";
-import { PrivateKeyAccount } from "viem";
+import { Wallet } from "@/types/wallet";
 import { useConnect } from "wagmi";
+import { KeyStore } from "web3";
 import WalletCard from "./wallet-card";
 
 type InternalWalletCardsProps = {
-  wallets: PrivateKeyAccount[];
+  wallets: KeyStore[];
 };
 
 export default function InternalWalletCards({
@@ -14,7 +15,7 @@ export default function InternalWalletCards({
 }: InternalWalletCardsProps) {
   const { connect } = useConnect();
 
-  async function connectCustomWallet(account: PrivateKeyAccount) {
+  async function connectCustomWallet(wallet: Wallet) {
     connect({ chainId: 32382, connector: customConnector() }); // sepolia
   }
 

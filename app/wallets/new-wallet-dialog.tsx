@@ -11,11 +11,11 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { generateKeyStoreFile, generateWallet } from "@/lib/web3";
+import { Wallet } from "@/types/wallet";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Download } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { Address, PrivateKeyAccount, privateKeyToAccount } from "viem/accounts";
 import { KeyStore } from "web3";
 import { z } from "zod";
 
@@ -24,7 +24,7 @@ const formSchema = z.object({
 });
 
 type NewWalletDialogProps = {
-  handler: (account: PrivateKeyAccount) => void;
+  handler: (wallet: Wallet) => void;
 };
 
 export function NewWalletDialog({ handler }: NewWalletDialogProps) {
@@ -41,10 +41,8 @@ export function NewWalletDialog({ handler }: NewWalletDialogProps) {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     // generate a wallet and add it to wallets in local storage
     const wallet = generateWallet();
-    const account = privateKeyToAccount(wallet.privateKey as Address);
-    handler(account);
-
     const keystore = await generateKeyStoreFile(wallet, values.password);
+    handler(keystore);
     setKeystore(keystore);
   }
 
