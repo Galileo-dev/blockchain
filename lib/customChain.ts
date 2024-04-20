@@ -1,11 +1,11 @@
 import { defineChain } from "viem";
 
 export const customChain = defineChain({
-  id: 32382,
+  id: 1337,
   name: "Ethereum",
   nativeCurrency: {
-    name: "Personal ETH devnet",
-    symbol: "pdETH",
+    name: "ETH devnet",
+    symbol: "ETH",
     decimals: 18,
   },
   rpcUrls: {

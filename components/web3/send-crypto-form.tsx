@@ -1,5 +1,6 @@
 "use client";
 
+import { AlertError } from "@/components/ui/alert-error";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -20,97 +21,51 @@ import {
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { EstimateGasErrorType, SendTransactionErrorType } from "@wagmi/core";
 import { Fuel } from "lucide-react";
-import { useState } from "react";
 import { useForm } from "react-hook-form";
-import {
-  formatEther,
-  formatGwei,
-  isAddress,
-  parseEther,
-  parseGwei,
-} from "viem";
-import {
-  useAccount,
-  useEstimateGas,
-  useSendTransaction,
-  useWaitForTransactionReceipt,
-  type BaseError,
-} from "wagmi";
+import { isAddress } from "viem";
+import { type BaseError } from "wagmi";
 import { z } from "zod";
 
-const formSchema = z.object({
+const transactionFormSchema = z.object({
   address: z.custom((val) => isAddress(val as string), "Invalid Address"),
   amount: z.string().min(1, "Amount must be greater than 0"),
   gas: z.string().optional(),
 });
 
-export function SendCrypto() {
-  const [formInputs, setFormInputs] = useState<z.infer<typeof formSchema>>();
-  const { address, chain } = useAccount();
-  const { data: estimateGas, error: estimateGasError } = useEstimateGas({
-    account: address,
-    to: formInputs?.address,
-    value: formInputs?.amount ? parseEther(formInputs.amount) : undefined,
-  });
+type TransactionFormValues = z.infer<typeof transactionFormSchema>;
 
-  const {
-    data: hash,
-    error,
-    isPending,
-    sendTransaction,
-  } = useSendTransaction();
+type SendCryptoProps = {
+  onSubmit: (values: TransactionFormValues) => void;
+  onChange: (values: TransactionFormValues) => void;
+  isConfirming: boolean;
+  isConfirmed: boolean;
+  transactionError: SendTransactionErrorType | null;
+  estimateGas: string | null;
+  estimateGasError: EstimateGasErrorType | null;
+};
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    mode: "onBlur",
-    defaultValues: {
-      address: "",
-      amount: "",
-      gas: "",
-    },
-  });
-
-  async function onSubmit(values: z.infer<typeof formSchema>) {
-    const to = values.address;
-    const value = values.amount;
-    sendTransaction({
-      to,
-      value: parseEther(value),
-      gas: values.gas ? parseGwei(values.gas) : estimateGas,
-    });
-    // const localStorageWallets = localStorage.getItem("wallets");
-    // if (!localStorageWallets) return;
-    // console.log("localStorageWallets", localStorageWallets);
-    // const wallet: Wallet = JSON.parse(localStorageWallets).find(
-    //   (x: Wallet) => x.address === address
-    // );
-    // if (!wallet) return;
-    // console.log("wallet", wallet);
-    // // decrypt wallet
-
-    // const account = await getAccountFromKeyStore(wallet, "ilim");
-    // if (!account) return;
-    // const transactionHash = await account.signTransaction({
-    //   to,
-    //   value: parseEther(value),
-    //   gas: estimateGas,
-    // });
-    // console.log("transactionHash", transactionHash);
-  }
-
-  const { isLoading: isConfirming, isSuccess: isConfirmed } =
-    useWaitForTransactionReceipt({
-      hash,
-    });
-
-  async function onChange(values: z.infer<typeof formSchema>) {
-    setFormInputs(values);
-  }
-
-  const formatBalance = (balance: bigint) => {
-    return parseFloat(formatEther(balance, "wei")).toFixed(4);
+export function SendCryptoForm({
+  onSubmit,
+  onChange,
+  isConfirming,
+  isConfirmed,
+  transactionError,
+  estimateGas,
+  estimateGasError,
+}: SendCryptoProps) {
+  const defaultValues: TransactionFormValues = {
+    address: "",
+    amount: "",
+    gas: "",
   };
+
+  const form = useForm<TransactionFormValues>({
+    resolver: zodResolver(transactionFormSchema),
+    mode: "onChange",
+    defaultValues,
+  });
 
   return (
     <Card className="w-[500px]">
@@ -162,9 +117,9 @@ export function SendCrypto() {
                       Estimated Gas price
                     </p>
                     <p className="text-sm text-muted-foreground">
-                      {formatGwei(estimateGas)}
+                      {estimateGas}
                     </p>
-                    {/* <FormField
+                    <FormField
                       control={form.control}
                       name="gas"
                       render={({ field }) => (
@@ -176,7 +131,7 @@ export function SendCrypto() {
                           <FormMessage />
                         </FormItem>
                       )}
-                    /> */}
+                    />
                   </div>
                 </div>
               ) : null}
@@ -185,10 +140,11 @@ export function SendCrypto() {
               <Button type="submit">Send &rarr;</Button>
               {isConfirming && <div>Waiting for confirmation...</div>}
               {isConfirmed && <div>Transaction confirmed.</div>}
-              {error && (
-                <div>
-                  Error: {(error as BaseError).shortMessage || error.message}
-                </div>
+              {transactionError && (
+                <AlertError>
+                  {(transactionError as BaseError).shortMessage ||
+                    transactionError.message}
+                </AlertError>
               )}
             </CardFooter>
           </div>

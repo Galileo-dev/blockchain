@@ -1,7 +1,7 @@
 "use client";
 
+import { SendCrypto } from "@/components/web3/send-crypto";
 import { useAccount, useBalance } from "wagmi";
-import { SendCrypto } from "./send-crypto";
 
 export default function Wallet() {
   const { address, chain } = useAccount();

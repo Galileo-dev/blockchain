@@ -15,7 +15,7 @@ export default function InternalWalletCards({
   const { connect } = useConnect();
 
   async function connectCustomWallet(wallet: Wallet) {
-    connect({ chainId: 32382, connector: customConnector() }); // sepolia
+    connect({ connector: customConnector() });
   }
 
   return (

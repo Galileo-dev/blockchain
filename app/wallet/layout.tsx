@@ -4,7 +4,7 @@ import { Separator } from "@/components/ui/separator";
 import "@/styles/globals.css";
 import { redirect } from "next/navigation";
 import { useAccount } from "wagmi";
-import DashboardMenu from "./wallet-menu";
+import DashboardMenu from "./menu";
 
 export default function RootLayout({
   children,

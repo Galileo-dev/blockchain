@@ -2,6 +2,14 @@
 
 import { Button } from "@/components/ui/button";
 import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import {
   Form,
   FormControl,
   FormDescription,
@@ -17,39 +25,67 @@ import { useForm } from "react-hook-form";
 import { KeyStore } from "web3";
 import { z } from "zod";
 
-const formSchema = z.object({
-  key_store_file: z.instanceof(File),
+type ImportWalletTriggerProps = {
+  handler: (wallet: Wallet) => void;
+};
+
+export function ImportWalletTrigger({ handler }: ImportWalletTriggerProps) {
+  return (
+    <Dialog>
+      <DialogTrigger asChild>
+        <Button variant="outline">Import</Button>
+      </DialogTrigger>
+      <DialogContent className="sm:max-w-[425px]">
+        <DialogHeader>
+          <DialogTitle>Import a wallet</DialogTitle>
+          <DialogDescription>
+            Import a wallet by uploading a key store file.
+          </DialogDescription>
+        </DialogHeader>
+        <ImportWalletDialog handler={handler} />
+      </DialogContent>
+    </Dialog>
+  );
+}
+
+const importWalletFormSchema = z.object({
+  key_store_file: z.any(), // Todo: add validation
   password: z.string(),
 });
+
+type ImportWalletFormValues = z.infer<typeof importWalletFormSchema>;
 
 type ImportWalletDialogProps = {
   handler: (account: Wallet) => void;
 };
 
+const defaultValues: ImportWalletFormValues = {
+  key_store_file: undefined,
+  password: "",
+};
+
 export function ImportWalletDialog({ handler }: ImportWalletDialogProps) {
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<ImportWalletFormValues>({
+    resolver: zodResolver(importWalletFormSchema),
     mode: "onBlur",
-    defaultValues: {
-      key_store_file: undefined,
-      password: "",
-    },
+    defaultValues,
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  function onSubmit(values: ImportWalletFormValues) {
     const reader = new FileReader();
+    // read the json file
     reader.onload = async function (e) {
       let keyStore: KeyStore;
       try {
         keyStore = JSON.parse(e.target?.result as string);
       } catch (error) {
+        // show error if the file is not json
         form.setError("key_store_file", {
           type: "manual",
           message: "Invalid key store file",
         });
         return;
       }
-
       handler(keyStore as Wallet);
     };
     reader.readAsText(values.key_store_file);
@@ -68,7 +104,7 @@ export function ImportWalletDialog({ handler }: ImportWalletDialogProps) {
                 <Input
                   type="file"
                   {...field}
-                  value={undefined}
+                  value={undefined} // needed for the input to work!
                   onChange={(e) => {
                     const files = e.target.files;
                     if (files) {
