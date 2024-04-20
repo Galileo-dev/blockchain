@@ -3,7 +3,6 @@ import { getWalletClient } from "@wagmi/core";
 import {
   RpcRequestError,
   SwitchChainError,
-  UserRejectedRequestError,
   custom,
   fromHex,
   getAddress,
@@ -120,12 +119,10 @@ export function customConnector({}: CustomConnectorParameters = {}) {
             { from: Hex; to: Hex; value: Hex; gas: Hex; data: Hex }
           ];
           const transactionParams = (params as Params)[0];
-          console.log("transactionParams", transactionParams);
           const localStorageWallets = localStorage.getItem("wallets");
           if (!localStorageWallets)
-            throw new UserRejectedRequestError(
-              new Error("Failed to sign message.")
-            );
+            throw new Error("Failed to sign message: No wallets found.");
+
           const wallet: KeyStore = JSON.parse(localStorageWallets).find(
             (x: KeyStore) =>
               (!x.address.startsWith("0x")
@@ -133,6 +130,8 @@ export function customConnector({}: CustomConnectorParameters = {}) {
                 : x.address
               ).toLowerCase() === transactionParams.from.toLowerCase()
           );
+          if (!wallet) throw new Error("Matching wallet not found.");
+
           // TODO(): Prompt user to unlock wallet with password
           const account = await getAccountFromKeyStore(wallet, "ilim");
           const client = await getWalletClient(wagmiConfig);
@@ -142,7 +141,6 @@ export function customConnector({}: CustomConnectorParameters = {}) {
             value: BigInt(transactionParams.value),
             gas: BigInt(transactionParams.gas),
           });
-          console.log("transactionHash", transactionHash);
           return transactionHash;
         }
         if (method === "eth_signTypedData_v4") {
