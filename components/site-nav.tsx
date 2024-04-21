@@ -19,7 +19,7 @@ export function SiteNav({
       <Link
         href="/product"
         className={cn(
-          "transition-colors hover:text-foreground/80",
+          "hover:text-foreground/80 transition-colors",
           pathname?.startsWith("/products")
             ? "text-foreground"
             : "text-foreground/60",
@@ -30,7 +30,7 @@ export function SiteNav({
       <Link
         href="/about"
         className={cn(
-          "transition-colors hover:text-foreground/80",
+          "hover:text-foreground/80 transition-colors",
           pathname?.startsWith("/about")
             ? "text-foreground"
             : "text-foreground/60",
@@ -41,7 +41,7 @@ export function SiteNav({
       <Link
         href="/mission"
         className={cn(
-          "transition-colors hover:text-foreground/80",
+          "hover:text-foreground/80 transition-colors",
           pathname?.startsWith("/mission")
             ? "text-foreground"
             : "text-foreground/60",

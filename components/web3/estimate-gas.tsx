@@ -39,7 +39,7 @@ export default function EstimateGas({
             <FormItem>
               <div className="flex items-center space-x-2">
                 <FormLabel>Gas price</FormLabel>
-                <Fuel className="ml-2 h-4 w-4" />
+                <Fuel className="ml-2 size-4" />
               </div>
               <FormControl>
                 <Input type="number" {...field} />

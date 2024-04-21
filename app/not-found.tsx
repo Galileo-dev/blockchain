@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function NotFound() {
   return (
-    <div className="container flex flex-1 flex-col items-center justify-center mx-auto">
+    <div className="container mx-auto flex flex-1 flex-col items-center justify-center">
       <div className="flex justify-center">
         <Image
           unoptimized

@@ -1,9 +1,9 @@
 export default function Home() {
   return (
     <>
-      <div className="container flex flex-1 flex-col items-center justify-center mx-auto space-y-2">
-        <div className="h-[40rem] w-ful flex flex-col items-center justify-center overflow-hidden rounded-m">
-          <h1 className="text-4xl font-bold text-center">
+      <div className="container mx-auto flex flex-1 flex-col items-center justify-center space-y-2">
+        <div className="w-ful rounded-m flex h-[40rem] flex-col items-center justify-center overflow-hidden">
+          <h1 className="text-center text-4xl font-bold">
             Welcome to the future
           </h1>
         </div>

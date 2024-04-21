@@ -13,7 +13,7 @@ export default function Wallet() {
           {balance.data.symbol}
         </p>
       )} */}
-      <div className="container flex flex-1 flex-col items-center justify-center mx-auto">
+      <div className="container mx-auto flex flex-1 flex-col items-center justify-center">
         <div className="space-y-2 overflow-scroll">
           <SendCrypto />
         </div>

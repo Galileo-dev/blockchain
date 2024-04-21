@@ -9,19 +9,19 @@ import Link from "next/link";
 export default function ProductPage() {
   return (
     <div className="flex flex-1 flex-col items-center justify-center space-y-2">
-      <div className="container flex flex-1 flex-col items-center justify-center mx-auto space-y-2 my-20">
+      <div className="container mx-auto my-20 flex flex-1 flex-col items-center justify-center space-y-2">
         {/* Sideways text with motion */}
         <motion.div
-          className="fixed top-1/4 -left-20 transform -translate-y-1/2 z-10 hidden lg:flex"
+          className="fixed -left-20 top-1/4 z-10 hidden -translate-y-1/2 lg:flex"
           initial={{ y: 25, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.5 }}
         >
           <Link
             href="/product"
-            className="flex flex-row items-center justify-center transform -rotate-90 cursor-pointer hover:underline"
+            className="flex -rotate-90 cursor-pointer flex-row items-center justify-center hover:underline"
           >
-            <div className="font-bold whitespace-nowrap mr-2">
+            <div className="mr-2 whitespace-nowrap font-bold">
               Go back to product page
             </div>
             <ArrowUpFromLine className="rotate-90" size={20} />
@@ -29,9 +29,9 @@ export default function ProductPage() {
         </motion.div>
 
         {/* Main content */}
-        <div className="mx-auto flex flex-col lg:flex-row mt-20 lg:mt-0 lg:space-x-10">
+        <div className="mx-auto mt-20 flex flex-col lg:mt-0 lg:flex-row lg:space-x-10">
           {/* Text Content */}
-          <div className="lg:w-1/2 space-y-10 md:space-y-20 px-4 lg:px-0">
+          <div className="space-y-10 px-4 md:space-y-20 lg:w-1/2 lg:px-0">
             {/* Title */}
             <motion.h1
               initial={{ x: -25, opacity: 0 }}
@@ -39,7 +39,7 @@ export default function ProductPage() {
               transition={{ duration: 0.5, type: "spring", stiffness: 100 }}
               className="text-4xl font-bold"
             >
-              <span className="dark:text-purple-200 text-purple-500">
+              <span className="text-purple-500 dark:text-purple-200">
                 Orb O1
               </span>{" "}
               is the future of gesture computing
@@ -55,7 +55,7 @@ export default function ProductPage() {
                 stiffness: 100,
                 delay: 0.5,
               }}
-              className="text-lg dark:text-gray-300 text-gray-700"
+              className="text-lg text-gray-700 dark:text-gray-300"
             >
               Orb is offering a new way to interact with your computer. We use
               cutting-edge machine learning technology to understand your
@@ -65,7 +65,7 @@ export default function ProductPage() {
 
           {/* Image */}
           <motion.div
-            className="lg:flex-grow"
+            className="lg:grow"
             initial={{ x: 25, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             transition={{ duration: 0.5, type: "spring", stiffness: 100 }}
@@ -75,16 +75,16 @@ export default function ProductPage() {
               alt="Orb O1"
               width={800}
               height={800}
-              className="object-cover min-w-[300px] md:min-w-[500px]"
+              className="min-w-[300px] object-cover md:min-w-[500px]"
             />
           </motion.div>
         </div>
 
         {/* Call to Action */}
         <div className="!mt-24 px-4 lg:px-0">
-          <button className="p-[3px] relative">
-            <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-lg" />
-            <div className="px-8 py-2 bg-black rounded-[6px] relative group transition duration-200 text-white hover:bg-transparent">
+          <button className="relative p-[3px]">
+            <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-indigo-500 to-purple-500" />
+            <div className="group relative rounded-[6px] bg-black px-8 py-2 text-white transition duration-200 hover:bg-transparent">
               Buy Now!
             </div>
           </button>
@@ -93,17 +93,17 @@ export default function ProductPage() {
 
       {/*  Bottom Gradient */}
       <motion.div
-        className="my-auto bg-gradient-to-r from-indigo-500 to-purple-500 rounded-md min-h-80 w-11/12"
+        className="my-auto min-h-80 w-11/12 rounded-md bg-gradient-to-r from-indigo-500 to-purple-500"
         initial={{ y: 100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.5 }}
       >
         <div className="container space-y-10 py-20">
           <div>
-            <h1 className="font-bold text-4xl text-neutral-200 text-center">
+            <h1 className="text-center text-4xl font-bold text-neutral-200">
               Features
             </h1>
-            <p className="text-lg text-neutral-300 text-center">
+            <p className="text-center text-lg text-neutral-300">
               The Orb O1 is full of feature but here are some of the highlights.
             </p>
           </div>
@@ -113,7 +113,7 @@ export default function ProductPage() {
             <Card className="w-full max-w-md p-4">
               <CardHeader>
                 <CardTitle>
-                  <Clock2 size={60} className="mr-2 mb-4" />
+                  <Clock2 size={60} className="mb-4 mr-2" />
                   <span>Effortless</span>
                 </CardTitle>
               </CardHeader>
@@ -132,7 +132,7 @@ export default function ProductPage() {
             <Card className="w-full max-w-md p-4">
               <CardHeader>
                 <CardTitle>
-                  <Code size={60} className="mr-2 mb-4" />
+                  <Code size={60} className="mb-4 mr-2" />
                   <span>Developers First</span>
                 </CardTitle>
               </CardHeader>
@@ -149,7 +149,7 @@ export default function ProductPage() {
             <Card className="w-full max-w-md p-4">
               <CardHeader>
                 <CardTitle>
-                  <VenetianMask size={60} className="mr-2 mb-4" />
+                  <VenetianMask size={60} className="mb-4 mr-2" />
                   <span>Privacy</span>
                 </CardTitle>
               </CardHeader>
@@ -164,7 +164,7 @@ export default function ProductPage() {
           </div>
         </div>
       </motion.div>
-      <div className="container text-center text-lg p-4 italic font-light !my-44">
+      <div className="container !my-44 p-4 text-center text-lg font-light italic">
         &ldquo;Close your eyes and imagine the future of computer interaction.
         How will you make your computer do what you want it to do? How will you
         interface with the device that you use every day? Will it use sound,

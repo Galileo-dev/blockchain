@@ -15,23 +15,22 @@ export default function RootLayout({
 }>) {
   // redirect to /wallets if no wallet is selected
   const { isConnected, address, chain } = useAccount();
-  if (!isConnected) {
-    return redirect("/wallets");
-  }
-
   const balance = useBalance({
     address,
   });
+  if (!isConnected) {
+    return redirect("/wallets");
+  }
 
   const addressBlockExplorer =
     chain?.blockExplorers?.default.url + "/address/" + address;
 
   return (
     <>
-      <div className="space-x container mb-5 mt-5 flex flex-1 flex-col">
-        <div className="space-y-0.5 flex flex-row justify-between">
+      <div className="space-x container my-5 flex flex-1 flex-col">
+        <div className="flex flex-row justify-between space-y-0.5">
           <h2 className="text-3xl font-bold tracking-tight">Dashboard</h2>
-          <div className="flex-1 flex justify-center">
+          <div className="flex flex-1 justify-center">
             <div>
               <RainbowButton href={addressBlockExplorer} target="_blank">
                 {address}

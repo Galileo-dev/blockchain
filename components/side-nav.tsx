@@ -19,7 +19,7 @@ export function SideNav({ items }: SideNavProps) {
   }
 
   return (
-    <div className="flex h-full flex-1 flex-col justify-start items-center space-y-2">
+    <div className="flex h-full flex-1 flex-col items-center justify-start space-y-2">
       {items.map((item, index) => {
         const Icon = icons[item.icon || "HelpCircle"];
         return (
@@ -33,7 +33,7 @@ export function SideNav({ items }: SideNavProps) {
               <Button
                 variant={path === item.href ? "default" : "ghost"}
                 className={cn(
-                  "mt-0 flex-shrink-0 flex-grow",
+                  "mt-0 shrink-0 grow",
                   item.disabled && "cursor-not-allowed opacity-80",
                 )}
                 size="lg"

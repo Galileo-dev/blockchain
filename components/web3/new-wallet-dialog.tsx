@@ -114,7 +114,7 @@ export function NewWalletDialog({ handler }: NewWalletDialogProps) {
           <Download />
           <div className="flex-1 space-y-1">
             <p className="text-sm font-medium leading-none">Key Store</p>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-muted-foreground text-sm">
               You should keep this in a safe place.
             </p>
           </div>

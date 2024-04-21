@@ -25,7 +25,7 @@ export default function Page() {
 
   return (
     <>
-      <div className="space-x container mb-5 mt-5 flex flex-1 flex-col">
+      <div className="space-x container my-5 flex flex-1 flex-col">
         <div className="flex flex-row space-y-0.5">
           <h2 className="text-3xl font-bold tracking-tight">Wallets</h2>
           <div className="ml-auto flex items-center space-x-4">

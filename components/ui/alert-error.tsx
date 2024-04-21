@@ -8,11 +8,11 @@ export const AlertError = React.forwardRef<
   React.HTMLAttributes<HTMLDivElement> & { children?: React.ReactNode }
 >(({ className, children, ...props }, ref) => (
   <Alert variant="destructive" className={className} ref={ref} {...props}>
-    <AlertCircle className="h-4 w-4" />
+    <AlertCircle className="size-4" />
     <AlertTitle>Error</AlertTitle>
     <AlertDescription>
       {children || "Something went wrong. Please try again."}
     </AlertDescription>
   </Alert>
 ));
-Alert.displayName = "AlertError";
+AlertError.displayName = "AlertError";

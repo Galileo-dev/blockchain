@@ -25,14 +25,14 @@ export default function RootLayout({
       <head />
       <body
         className={cn(
-          "min-h-screen bg-background font-sans antialiased",
+          "bg-background min-h-screen font-sans antialiased",
           fontSans.variable,
         )}
       >
         <Providers initialState={initialState}>
-          <div className="relative flex min-h-screen flex-col bg-background">
+          <div className="bg-background relative flex min-h-screen flex-col">
             <SiteHeader />
-            <main className="flex flex-col flex-1">{children}</main>
+            <main className="flex flex-1 flex-col">{children}</main>
             <Toaster />
           </div>
         </Providers>

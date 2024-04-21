@@ -114,7 +114,7 @@ export function SendCryptoForm({
                   </FormItem>
                 )}
               />
-              <Separator className="w-full my-8" />
+              <Separator className="my-8 w-full" />
 
               <EstimateGas
                 estimateGas={estimateGas}

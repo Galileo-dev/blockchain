@@ -9,11 +9,11 @@ export const AlertPending = React.forwardRef<
   React.HTMLAttributes<HTMLDivElement> & { children?: React.ReactNode }
 >(({ className, children, ...props }, ref) => (
   <Alert variant="default" className={cn(className)} ref={ref} {...props}>
-    <LoaderCircle className="h-4 w-4 animate-spin" />
+    <LoaderCircle className="size-4 animate-spin" />
     <AlertTitle>Pending</AlertTitle>
     <AlertDescription>
       {children || "Please wait while we process your request."}
     </AlertDescription>
   </Alert>
 ));
-Alert.displayName = "AlertPending";
+AlertPending.displayName = "AlertPending";
