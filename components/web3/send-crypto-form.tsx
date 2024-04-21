@@ -36,15 +36,43 @@ const transactionFormSchema = z.object({
 
 type TransactionFormValues = z.infer<typeof transactionFormSchema>;
 
-type SendCryptoProps = {
+interface SendCryptoFormProps {
+  /**
+   * Called when the form is valid and submitted
+   */
   onSubmit: (values: TransactionFormValues) => void;
+
+  /**
+   * Called when the form is valid and changes
+   * ( useful for updating the estimate gas )
+   */
   onChange: (values: TransactionFormValues) => void;
+
+  /**
+   * Is the transaction being confirmed
+   */
   isConfirming: boolean;
+
+  /**
+   * Is the transaction confirmed
+   */
   isConfirmed: boolean;
+
+  /**
+   * Transaction error
+   */
   transactionError: SendTransactionErrorType | null;
+
+  /**
+   * Estimated gas
+   */
   estimateGas: string | null;
+
+  /**
+   * Estimated gas error
+   */
   estimateGasError: EstimateGasErrorType | null;
-};
+}
 
 export function SendCryptoForm({
   onSubmit,
@@ -54,7 +82,7 @@ export function SendCryptoForm({
   transactionError,
   estimateGas,
   estimateGasError,
-}: SendCryptoProps) {
+}: SendCryptoFormProps) {
   const defaultValues: TransactionFormValues = {
     address: "",
     amount: "",
@@ -63,7 +91,6 @@ export function SendCryptoForm({
 
   const form = useForm<TransactionFormValues>({
     resolver: zodResolver(transactionFormSchema),
-    mode: "onChange",
     defaultValues,
   });
 
@@ -134,7 +161,13 @@ export function SendCryptoForm({
                     />
                   </div>
                 </div>
-              ) : null}
+              ) : (
+                estimateGasError?.message && (
+                  <AlertError>
+                    {estimateGasError?.message || "Failed to estimate gas"}
+                  </AlertError>
+                )
+              )}
             </CardContent>
             <CardFooter>
               <Button type="submit">Send &rarr;</Button>
