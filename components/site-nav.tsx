@@ -22,7 +22,7 @@ export function SiteNav({
           "transition-colors hover:text-foreground/80",
           pathname?.startsWith("/products")
             ? "text-foreground"
-            : "text-foreground/60"
+            : "text-foreground/60",
         )}
       >
         Products
@@ -33,7 +33,7 @@ export function SiteNav({
           "transition-colors hover:text-foreground/80",
           pathname?.startsWith("/about")
             ? "text-foreground"
-            : "text-foreground/60"
+            : "text-foreground/60",
         )}
       >
         About
@@ -44,7 +44,7 @@ export function SiteNav({
           "transition-colors hover:text-foreground/80",
           pathname?.startsWith("/mission")
             ? "text-foreground"
-            : "text-foreground/60"
+            : "text-foreground/60",
         )}
       >
         Mission

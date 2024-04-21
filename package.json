@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "format": "prettier --check '**/*.{mjs,json}' ",
     "preview": "next build && next start"
   },
   "dependencies": {
@@ -26,7 +27,6 @@
     "@tsparticles/engine": "^3.3.0",
     "@tsparticles/react": "^3.0.0",
     "@tsparticles/slim": "^3.3.0",
-    "@types/nodemailer": "^6.4.14",
     "@wagmi/core": "^2.6.17",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
@@ -41,7 +41,6 @@
     "react-dom": "^18.2.0",
     "react-element-to-jsx-string": "^15.0.0",
     "react-hook-form": "^7.51.3",
-    "recharts": "^2.12.5",
     "sharp": "^0.33.3",
     "viem": "2.x",
     "wagmi": "^2.5.20",
@@ -49,6 +48,7 @@
     "zod": "^3.22.5"
   },
   "devDependencies": {
+    "@ianvs/prettier-plugin-sort-imports": "^4.2.1",
     "@types/node": "^20.12.7",
     "@types/react": "^18.2.79",
     "@types/react-dom": "^18.2.25",
@@ -56,6 +56,7 @@
     "eslint": "^9.1.0",
     "eslint-config-next": "14.2.1",
     "postcss": "^8.4.38",
+    "prettier-plugin-tailwindcss": "^0.5.14",
     "tailwind-merge": "^2.3.0",
     "tailwindcss": "^3.4.3",
     "tailwindcss-animate": "^1.0.7",
