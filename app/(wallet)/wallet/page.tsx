@@ -1,6 +1,6 @@
-"use client";
+"use client"
 
-import { SendCrypto } from "@/components/web3/send-crypto";
+import { SendCrypto } from "@/components/web3/send-crypto"
 
 export default function Wallet() {
   return (
@@ -19,5 +19,5 @@ export default function Wallet() {
         </div>
       </div>
     </>
-  );
+  )
 }

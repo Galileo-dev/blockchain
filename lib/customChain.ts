@@ -1,4 +1,4 @@
-import { defineChain } from "viem";
+import { defineChain } from "viem"
 
 export const customChain = defineChain({
   id: 1337,
@@ -28,4 +28,4 @@ export const customChain = defineChain({
     },
   },
   testnet: true,
-});
+})

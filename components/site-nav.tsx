@@ -1,15 +1,15 @@
-"use client";
+"use client"
 
-import Link from "next/link";
+import Link from "next/link"
+import { usePathname } from "next/navigation"
 
-import { cn } from "@/lib/utils";
-import { usePathname } from "next/navigation";
+import { cn } from "@/lib/utils"
 
 export function SiteNav({
   className,
   ...props
 }: React.HTMLAttributes<HTMLElement>) {
-  const pathname = usePathname();
+  const pathname = usePathname()
 
   return (
     <nav
@@ -19,10 +19,10 @@ export function SiteNav({
       <Link
         href="/product"
         className={cn(
-          "hover:text-foreground/80 transition-colors",
+          "transition-colors hover:text-foreground/80",
           pathname?.startsWith("/products")
             ? "text-foreground"
-            : "text-foreground/60",
+            : "text-foreground/60"
         )}
       >
         Products
@@ -30,10 +30,10 @@ export function SiteNav({
       <Link
         href="/about"
         className={cn(
-          "hover:text-foreground/80 transition-colors",
+          "transition-colors hover:text-foreground/80",
           pathname?.startsWith("/about")
             ? "text-foreground"
-            : "text-foreground/60",
+            : "text-foreground/60"
         )}
       >
         About
@@ -41,14 +41,14 @@ export function SiteNav({
       <Link
         href="/mission"
         className={cn(
-          "hover:text-foreground/80 transition-colors",
+          "transition-colors hover:text-foreground/80",
           pathname?.startsWith("/mission")
             ? "text-foreground"
-            : "text-foreground/60",
+            : "text-foreground/60"
         )}
       >
         Mission
       </Link>
     </nav>
-  );
+  )
 }

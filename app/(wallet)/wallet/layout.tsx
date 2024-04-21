@@ -1,29 +1,31 @@
-"use client";
+"use client"
 
-import { SideNav } from "@/components/side-nav";
-import { RainbowButton } from "@/components/ui/rainbow-button";
-import { Separator } from "@/components/ui/separator";
-import { dashboardConfig } from "@/config/dashboard";
-import "@/styles/globals.css";
-import { redirect } from "next/navigation";
-import { useAccount, useBalance } from "wagmi";
+import { dashboardConfig } from "@/config/dashboard"
+import { RainbowButton } from "@/components/ui/rainbow-button"
+import { Separator } from "@/components/ui/separator"
+import { SideNav } from "@/components/side-nav"
+
+import "@/styles/globals.css"
+
+import { redirect } from "next/navigation"
+import { useAccount, useBalance } from "wagmi"
 
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: React.ReactNode
 }>) {
   // redirect to /wallets if no wallet is selected
-  const { isConnected, address, chain } = useAccount();
+  const { isConnected, address, chain } = useAccount()
   const balance = useBalance({
     address,
-  });
+  })
   if (!isConnected) {
-    return redirect("/wallets");
+    return redirect("/wallets")
   }
 
   const addressBlockExplorer =
-    chain?.blockExplorers?.default.url + "/address/" + address;
+    chain?.blockExplorers?.default.url + "/address/" + address
 
   return (
     <>
@@ -47,5 +49,5 @@ export default function RootLayout({
         </div>
       </div>
     </>
-  );
+  )
 }

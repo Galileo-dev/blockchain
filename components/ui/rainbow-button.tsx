@@ -1,9 +1,9 @@
-import * as React from "react";
+import * as React from "react"
 
 export interface RainbowButtonProps
   extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
-  children?: React.ReactNode;
-  href?: string;
+  children?: React.ReactNode
+  href?: string
 }
 
 const RainbowButton = React.forwardRef<HTMLAnchorElement, RainbowButtonProps>(
@@ -40,9 +40,9 @@ const RainbowButton = React.forwardRef<HTMLAnchorElement, RainbowButtonProps>(
           <span className="absolute -bottom-0 left-[1.125rem] h-px w-[calc(100%-2.25rem)] bg-gradient-to-r from-emerald-400/0 via-emerald-400/90 to-emerald-400/0 transition-opacity duration-500 group-hover:opacity-40" />
         </div>
       </a>
-    );
+    )
   }
-);
-RainbowButton.displayName = "RainbowButton";
+)
+RainbowButton.displayName = "RainbowButton"
 
-export { RainbowButton };
+export { RainbowButton }

@@ -1,33 +1,34 @@
-"use client";
+"use client"
 
-import { AlertError } from "@/components/ui/alert-error";
+import { useEffect } from "react"
+import { Fuel } from "lucide-react"
+import { useFormContext } from "react-hook-form"
+
+import { BaseError } from "types"
+import { AlertError } from "@/components/ui/alert-error"
 import {
   FormControl,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Fuel } from "lucide-react";
-import { useEffect } from "react";
-import { useFormContext } from "react-hook-form";
-import { BaseError } from "types";
+} from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
 
 interface EstimateGasProps {
-  estimateGas: string | null;
-  estimateGasError: BaseError | null;
+  estimateGas: string | null
+  estimateGasError: BaseError | null
 }
 
 export default function EstimateGas({
   estimateGas,
   estimateGasError,
 }: EstimateGasProps) {
-  const { control, setValue } = useFormContext();
+  const { control, setValue } = useFormContext()
 
   useEffect(() => {
-    setValue("gas", estimateGas, { shouldDirty: true });
-  }, [estimateGas, setValue]);
+    setValue("gas", estimateGas, { shouldDirty: true })
+  }, [estimateGas, setValue])
 
   return (
     <>
@@ -56,5 +57,5 @@ export default function EstimateGas({
         )
       )}
     </>
-  );
+  )
 }

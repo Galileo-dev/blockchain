@@ -1,9 +1,11 @@
-import { Wallet } from "@/types/wallet";
-import { Address, PrivateKeyAccount } from "viem";
-import { privateKeyToAccount } from "viem/accounts";
-import { KeyStore, Web3 } from "web3";
-import { type Web3Account } from "web3-eth-accounts";
-const web3 = new Web3();
+import { Address, PrivateKeyAccount } from "viem"
+import { privateKeyToAccount } from "viem/accounts"
+import { KeyStore, Web3 } from "web3"
+import { type Web3Account } from "web3-eth-accounts"
+
+import { Wallet } from "@/types/wallet"
+
+const web3 = new Web3()
 
 export async function getAccountFromKeyStore(
   keyStore: KeyStore,
@@ -13,22 +15,22 @@ export async function getAccountFromKeyStore(
     const web3Account = await web3.eth.accounts.decrypt(
       JSON.stringify(keyStore),
       password
-    );
-    const account = privateKeyToAccount(web3Account.privateKey as Address);
-    return account;
+    )
+    const account = privateKeyToAccount(web3Account.privateKey as Address)
+    return account
   } catch (error) {
-    console.error("Error decrypting the keystore", error);
-    throw error;
+    console.error("Error decrypting the keystore", error)
+    throw error
   }
 }
 
 export function generateWallet(): Web3Account {
-  return web3.eth.accounts.create();
+  return web3.eth.accounts.create()
 }
 
 export async function generateKeyStoreFile(
   wallet: Web3Account,
   password: string
 ): Promise<Wallet> {
-  return await web3.eth.accounts.encrypt(wallet.privateKey, password);
+  return await web3.eth.accounts.encrypt(wallet.privateKey, password)
 }

@@ -1,8 +1,8 @@
-import * as React from "react";
+import * as React from "react"
+import { LoaderCircle } from "lucide-react"
 
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { cn } from "@/lib/utils";
-import { LoaderCircle } from "lucide-react";
+import { cn } from "@/lib/utils"
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 
 export const AlertPending = React.forwardRef<
   HTMLDivElement,
@@ -15,5 +15,5 @@ export const AlertPending = React.forwardRef<
       {children || "Please wait while we process your request."}
     </AlertDescription>
   </Alert>
-));
-AlertPending.displayName = "AlertPending";
+))
+AlertPending.displayName = "AlertPending"

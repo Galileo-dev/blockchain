@@ -1,24 +1,15 @@
-"use client";
+"use client"
 
-import { Button } from "@/components/ui/button";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { generateKeyStoreFile, generateWallet } from "@/lib/web3";
-import { Wallet } from "@/types/wallet";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Download } from "lucide-react";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { KeyStore } from "web3";
-import { z } from "zod";
+import { useState } from "react"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { Download } from "lucide-react"
+import { useForm } from "react-hook-form"
+import { KeyStore } from "web3"
+import { z } from "zod"
 
+import { Wallet } from "@/types/wallet"
+import { generateKeyStoreFile, generateWallet } from "@/lib/web3"
+import { Button } from "@/components/ui/button"
 import {
   Dialog,
   DialogContent,
@@ -26,11 +17,20 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog";
+} from "@/components/ui/dialog"
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
 
 type NewWalletTriggerProps = {
-  handler: (wallet: Wallet) => void;
-};
+  handler: (wallet: Wallet) => void
+}
 
 export function NewWalletTrigger({ handler }: NewWalletTriggerProps) {
   return (
@@ -49,21 +49,21 @@ export function NewWalletTrigger({ handler }: NewWalletTriggerProps) {
         <NewWalletDialog handler={handler} />
       </DialogContent>
     </Dialog>
-  );
+  )
 }
 
 const newWalletFormSchema = z.object({
   password: z.string(),
-});
+})
 
-type NewWalletFormValues = z.infer<typeof newWalletFormSchema>;
+type NewWalletFormValues = z.infer<typeof newWalletFormSchema>
 
 type NewWalletDialogProps = {
-  handler: (wallet: Wallet) => void;
-};
+  handler: (wallet: Wallet) => void
+}
 
 export function NewWalletDialog({ handler }: NewWalletDialogProps) {
-  const [keystore, setKeystore] = useState<KeyStore | undefined>();
+  const [keystore, setKeystore] = useState<KeyStore | undefined>()
 
   const form = useForm<NewWalletFormValues>({
     resolver: zodResolver(newWalletFormSchema),
@@ -71,24 +71,24 @@ export function NewWalletDialog({ handler }: NewWalletDialogProps) {
     defaultValues: {
       password: "",
     },
-  });
+  })
 
   function downloadKeystore() {
     const jsonString = `data:text/json;chatset=utf-8,${encodeURIComponent(
       JSON.stringify(keystore)
-    )}`;
-    const link = document.createElement("a");
-    link.href = jsonString;
-    link.download = "keystore.json";
-    link.click();
+    )}`
+    const link = document.createElement("a")
+    link.href = jsonString
+    link.download = "keystore.json"
+    link.click()
   }
 
   async function onSubmit(values: NewWalletFormValues) {
     // generate a wallet and add it to wallets in local storage
-    const wallet = generateWallet();
-    const keystore = await generateKeyStoreFile(wallet, values.password); // Todo: check this is secure
-    handler(keystore);
-    setKeystore(keystore);
+    const wallet = generateWallet()
+    const keystore = await generateKeyStoreFile(wallet, values.password) // Todo: check this is secure
+    handler(keystore)
+    setKeystore(keystore)
   }
 
   return (
@@ -114,7 +114,7 @@ export function NewWalletDialog({ handler }: NewWalletDialogProps) {
           <Download />
           <div className="flex-1 space-y-1">
             <p className="text-sm font-medium leading-none">Key Store</p>
-            <p className="text-muted-foreground text-sm">
+            <p className="text-sm text-muted-foreground">
               You should keep this in a safe place.
             </p>
           </div>
@@ -122,5 +122,5 @@ export function NewWalletDialog({ handler }: NewWalletDialogProps) {
         </div>
       )}
     </Form>
-  );
+  )
 }

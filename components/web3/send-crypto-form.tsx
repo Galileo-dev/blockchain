@@ -1,7 +1,14 @@
-"use client";
+"use client"
 
-import { AlertError } from "@/components/ui/alert-error";
-import { Button } from "@/components/ui/button";
+import { zodResolver } from "@hookform/resolvers/zod"
+import { EstimateGasErrorType, SendTransactionErrorType } from "@wagmi/core"
+import { useForm } from "react-hook-form"
+import { isAddress } from "viem"
+import { z } from "zod"
+
+import { BaseError } from "types"
+import { AlertError } from "@/components/ui/alert-error"
+import { Button } from "@/components/ui/button"
 import {
   Card,
   CardContent,
@@ -9,7 +16,7 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
+} from "@/components/ui/card"
 import {
   Form,
   FormControl,
@@ -17,33 +24,27 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Separator } from "@/components/ui/separator";
-import EstimateGas from "@/components/web3/estimate-gas";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { EstimateGasErrorType, SendTransactionErrorType } from "@wagmi/core";
-import { useForm } from "react-hook-form";
-import { BaseError } from "types";
-import { isAddress } from "viem";
-import { z } from "zod";
+} from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
+import { Separator } from "@/components/ui/separator"
+import EstimateGas from "@/components/web3/estimate-gas"
 
 const transactionFormSchema = z.object({
   address: z.custom((val) => isAddress(val as string), "Invalid Address"),
   amount: z.string().min(1, "Amount must be greater than 0"),
   gas: z.string().optional(),
-});
+})
 
-type TransactionFormValues = z.infer<typeof transactionFormSchema>;
+type TransactionFormValues = z.infer<typeof transactionFormSchema>
 
 interface SendCryptoFormProps {
-  onSubmit: (values: TransactionFormValues) => void;
-  onChange: (values: TransactionFormValues) => void;
-  isConfirming: boolean;
-  isConfirmed: boolean;
-  transactionError: SendTransactionErrorType | null;
-  estimateGas: string | null;
-  estimateGasError: EstimateGasErrorType | null;
+  onSubmit: (values: TransactionFormValues) => void
+  onChange: (values: TransactionFormValues) => void
+  isConfirming: boolean
+  isConfirmed: boolean
+  transactionError: SendTransactionErrorType | null
+  estimateGas: string | null
+  estimateGasError: EstimateGasErrorType | null
 }
 
 export function SendCryptoForm({
@@ -59,12 +60,12 @@ export function SendCryptoForm({
     address: "",
     amount: "",
     gas: "",
-  };
+  }
 
   const form = useForm<TransactionFormValues>({
     resolver: zodResolver(transactionFormSchema),
     defaultValues,
-  });
+  })
 
   // const _onChange = (values: TransactionFormValues) => {
   //   const result = transactionFormSchema.safeParse(values);
@@ -135,5 +136,5 @@ export function SendCryptoForm({
         </form>
       </Form>
     </Card>
-  );
+  )
 }

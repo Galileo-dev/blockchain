@@ -1,9 +1,10 @@
-"use client";
+"use client"
 
-import { getDefaultConfig } from "connectkit";
-import { cookieStorage, createConfig, createStorage, http } from "wagmi";
-import { mainnet, sepolia } from "wagmi/chains";
-import { customChain } from "./customChain";
+import { getDefaultConfig } from "connectkit"
+import { cookieStorage, createConfig, createStorage, http } from "wagmi"
+import { mainnet, sepolia } from "wagmi/chains"
+
+import { customChain } from "./customChain"
 
 export const config = createConfig(
   getDefaultConfig({
@@ -20,4 +21,4 @@ export const config = createConfig(
       [customChain.id]: http(),
     },
   })
-);
+)

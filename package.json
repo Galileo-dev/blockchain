@@ -2,12 +2,13 @@
   "name": "blockchain",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "next dev --turbo",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "format": "prettier --check '**/*.{mjs,json}' ",
+    "format": "prettier --write .",
     "preview": "next build && next start"
   },
   "dependencies": {

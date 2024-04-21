@@ -1,14 +1,16 @@
-"use client";
+"use client"
 
-import Logo from "@/components/logo";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { SiteNav } from "./site-nav";
-import { Button } from "./ui/button";
-import { ModeToggle } from "./ui/mode-toggle";
+import Link from "next/link"
+import { usePathname } from "next/navigation"
+
+import Logo from "@/components/logo"
+
+import { SiteNav } from "./site-nav"
+import { Button } from "./ui/button"
+import { ModeToggle } from "./ui/mode-toggle"
 
 export default function SiteHeader() {
-  const pathname = usePathname();
+  const pathname = usePathname()
 
   return (
     <div className="flex-col md:flex">
@@ -27,5 +29,5 @@ export default function SiteHeader() {
         </div>
       </div>
     </div>
-  );
+  )
 }

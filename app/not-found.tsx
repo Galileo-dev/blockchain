@@ -1,4 +1,4 @@
-import Image from "next/image";
+import Image from "next/image"
 
 export default function NotFound() {
   return (
@@ -16,5 +16,5 @@ export default function NotFound() {
         404 - Page Not Found!
       </h2>
     </div>
-  );
+  )
 }

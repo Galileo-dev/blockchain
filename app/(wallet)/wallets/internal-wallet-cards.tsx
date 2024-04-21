@@ -1,21 +1,23 @@
-"use client";
+"use client"
 
-import { customConnector } from "@/lib/customConnector";
-import { Wallet, Wallets } from "@/types/wallet";
-import { useConnect } from "wagmi";
-import WalletCard from "./wallet-card";
+import { useConnect } from "wagmi"
+
+import { Wallet, Wallets } from "@/types/wallet"
+import { customConnector } from "@/lib/customConnector"
+
+import WalletCard from "./wallet-card"
 
 type InternalWalletCardsProps = {
-  wallets: Wallets;
-};
+  wallets: Wallets
+}
 
 export default function InternalWalletCards({
   wallets,
 }: InternalWalletCardsProps) {
-  const { connect } = useConnect();
+  const { connect } = useConnect()
 
   async function connectCustomWallet(wallet: Wallet) {
-    connect({ connector: customConnector() });
+    connect({ connector: customConnector() })
   }
 
   return (
@@ -28,5 +30,5 @@ export default function InternalWalletCards({
         />
       ))}
     </>
-  );
+  )
 }

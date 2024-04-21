@@ -1,10 +1,11 @@
-"use client";
+"use client"
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { motion } from "framer-motion";
-import { ArrowUpFromLine, Clock2, Code, VenetianMask } from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
+import Image from "next/image"
+import Link from "next/link"
+import { motion } from "framer-motion"
+import { ArrowUpFromLine, Clock2, Code, VenetianMask } from "lucide-react"
+
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
 export default function ProductPage() {
   return (
@@ -173,5 +174,5 @@ export default function ProductPage() {
         the Orb O1 as a first step towards that future.&rdquo; - Mr. Orb
       </div>
     </div>
-  );
+  )
 }

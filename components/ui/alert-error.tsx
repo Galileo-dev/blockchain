@@ -1,7 +1,7 @@
-import * as React from "react";
+import * as React from "react"
+import { AlertCircle } from "lucide-react"
 
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { AlertCircle } from "lucide-react";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 
 export const AlertError = React.forwardRef<
   HTMLDivElement,
@@ -14,5 +14,5 @@ export const AlertError = React.forwardRef<
       {children || "Something went wrong. Please try again."}
     </AlertDescription>
   </Alert>
-));
-AlertError.displayName = "AlertError";
+))
+AlertError.displayName = "AlertError"

@@ -1,27 +1,28 @@
-"use client";
+"use client"
 
-import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
-import { SidebarNavItem } from "@/types";
-import { icons } from "lucide-react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import Link from "next/link"
+import { usePathname } from "next/navigation"
+import { SidebarNavItem } from "@/types"
+import { icons } from "lucide-react"
+
+import { cn } from "@/lib/utils"
+import { Button } from "@/components/ui/button"
 
 interface SideNavProps {
-  items: SidebarNavItem[];
+  items: SidebarNavItem[]
 }
 
 export function SideNav({ items }: SideNavProps) {
-  const path = usePathname();
+  const path = usePathname()
 
   if (!items?.length) {
-    return null;
+    return null
   }
 
   return (
     <div className="flex h-full flex-1 flex-col items-center justify-start space-y-2">
       {items.map((item, index) => {
-        const Icon = icons[item.icon || "HelpCircle"];
+        const Icon = icons[item.icon || "HelpCircle"]
         return (
           item.href && (
             <div
@@ -34,7 +35,7 @@ export function SideNav({ items }: SideNavProps) {
                 variant={path === item.href ? "default" : "ghost"}
                 className={cn(
                   "mt-0 shrink-0 grow",
-                  item.disabled && "cursor-not-allowed opacity-80",
+                  item.disabled && "cursor-not-allowed opacity-80"
                 )}
                 size="lg"
                 asChild
@@ -46,8 +47,8 @@ export function SideNav({ items }: SideNavProps) {
               </Button>
             </div>
           )
-        );
+        )
       })}
     </div>
-  );
+  )
 }
