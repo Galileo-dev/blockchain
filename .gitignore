@@ -37,6 +37,3 @@ next-env.d.ts
 
 # erigon
 .erigon
-
-# storybook
-*storybook.log
