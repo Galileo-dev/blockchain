@@ -11,6 +11,9 @@ export const customChain = defineChain({
   rpcUrls: {
     default: { http: ["http://localhost:8545"] },
   },
+  blockExplorers: {
+    default: { name: "Otterscan", url: "http://localhost:5100" },
+  },
   contracts: {
     ensRegistry: {
       address: "0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e",
@@ -24,4 +27,5 @@ export const customChain = defineChain({
       blockCreated: 14353601,
     },
   },
+  testnet: true,
 });

@@ -1,14 +1,14 @@
 "use client";
 
 import { Separator } from "@/components/ui/separator";
-import useLocalStorage from "@/lib/localstorage";
-import { Wallet, Wallets } from "@/types/wallet";
+import { ImportWalletTrigger } from "@/components/web3/import-wallet-dialog";
+import { NewWalletTrigger } from "@/components/web3/new-wallet-dialog";
+import useLocalStorage from "@/hooks/useLocalStorage";
+import { Wallet, Wallets } from "@/types";
 import { useEffect } from "react";
 import { useDisconnect } from "wagmi";
 import ExternalWalletCard from "./external-wallet-card";
-import { ImportWalletTrigger } from "./import-wallet-trigger";
 import InternalWalletCards from "./internal-wallet-cards";
-import { NewWalletTrigger } from "./new-wallet-trigger";
 
 export default function Page() {
   const { disconnect } = useDisconnect();

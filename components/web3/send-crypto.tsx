@@ -1,11 +1,5 @@
 "use client";
 
-import {
-  Card,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import { SendCryptoForm } from "@/components/web3/send-crypto-form";
 import { useState } from "react";
 import {
@@ -71,20 +65,14 @@ export function SendCrypto() {
   };
 
   return (
-    <Card className="w-[500px]">
-      <CardHeader>
-        <CardTitle>Send Crypto</CardTitle>
-        <CardDescription>Send some crypto to a friend</CardDescription>
-      </CardHeader>
-      <SendCryptoForm
-        onSubmit={onSubmit}
-        onChange={onChange}
-        isConfirming={isConfirming}
-        isConfirmed={isConfirmed}
-        transactionError={error}
-        estimateGas={estimateGas ? formatGwei(estimateGas) : null}
-        estimateGasError={estimateGasError}
-      />
-    </Card>
+    <SendCryptoForm
+      onSubmit={onSubmit}
+      onChange={onChange}
+      isConfirming={isConfirming}
+      isConfirmed={isConfirmed}
+      transactionError={error}
+      estimateGas={estimateGas ? formatGwei(estimateGas) : null}
+      estimateGasError={estimateGasError}
+    />
   );
 }

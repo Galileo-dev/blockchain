@@ -20,12 +20,12 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
+import EstimateGas from "@/components/web3/estimate-gas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { EstimateGasErrorType, SendTransactionErrorType } from "@wagmi/core";
-import { Fuel } from "lucide-react";
 import { useForm } from "react-hook-form";
+import { BaseError } from "types";
 import { isAddress } from "viem";
-import { type BaseError } from "wagmi";
 import { z } from "zod";
 
 const transactionFormSchema = z.object({
@@ -37,40 +37,12 @@ const transactionFormSchema = z.object({
 type TransactionFormValues = z.infer<typeof transactionFormSchema>;
 
 interface SendCryptoFormProps {
-  /**
-   * Called when the form is valid and submitted
-   */
   onSubmit: (values: TransactionFormValues) => void;
-
-  /**
-   * Called when the form is valid and changes
-   * ( useful for updating the estimate gas )
-   */
   onChange: (values: TransactionFormValues) => void;
-
-  /**
-   * Is the transaction being confirmed
-   */
   isConfirming: boolean;
-
-  /**
-   * Is the transaction confirmed
-   */
   isConfirmed: boolean;
-
-  /**
-   * Transaction error
-   */
   transactionError: SendTransactionErrorType | null;
-
-  /**
-   * Estimated gas
-   */
   estimateGas: string | null;
-
-  /**
-   * Estimated gas error
-   */
   estimateGasError: EstimateGasErrorType | null;
 }
 
@@ -94,6 +66,13 @@ export function SendCryptoForm({
     defaultValues,
   });
 
+  // const _onChange = (values: TransactionFormValues) => {
+  //   const result = transactionFormSchema.safeParse(values);
+  //   if (result.success) {
+  //     onChange(result.data);
+  //   }
+  // };
+
   return (
     <Card className="w-[500px]">
       <CardHeader>
@@ -104,7 +83,7 @@ export function SendCryptoForm({
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          onChange={form.handleSubmit(onChange)}
+          onChange={(e) => onChange(form.getValues())}
           className="space-y-8"
         >
           <div className="grid w-full items-center gap-4">
@@ -136,38 +115,11 @@ export function SendCryptoForm({
                 )}
               />
               <Separator className="w-full my-8" />
-              {estimateGas ? (
-                <div className=" flex items-center space-x-4 rounded-md border p-4">
-                  <Fuel />
-                  <div className="flex-1 space-y-1">
-                    <p className="text-sm font-medium leading-none">
-                      Estimated Gas price
-                    </p>
-                    <p className="text-sm text-muted-foreground">
-                      {estimateGas}
-                    </p>
-                    <FormField
-                      control={form.control}
-                      name="gas"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Override</FormLabel>
-                          <FormControl>
-                            <Input type="number" {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-                </div>
-              ) : (
-                estimateGasError?.message && (
-                  <AlertError>
-                    {estimateGasError?.message || "Failed to estimate gas"}
-                  </AlertError>
-                )
-              )}
+
+              <EstimateGas
+                estimateGas={estimateGas}
+                estimateGasError={estimateGasError as BaseError}
+              />
             </CardContent>
             <CardFooter>
               <Button type="submit">Send &rarr;</Button>
@@ -175,8 +127,7 @@ export function SendCryptoForm({
               {isConfirmed && <div>Transaction confirmed.</div>}
               {transactionError && (
                 <AlertError>
-                  {(transactionError as BaseError).shortMessage ||
-                    transactionError.message}
+                  {(transactionError as BaseError).shortMessage}
                 </AlertError>
               )}
             </CardFooter>

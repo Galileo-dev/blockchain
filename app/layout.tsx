@@ -1,8 +1,8 @@
 import SiteHeader from "@/components/site-header";
+import { Providers } from "@/components/site-providers";
 import { Toaster } from "@/components/ui/toaster";
 import { config } from "@/lib/config";
 import { cn } from "@/lib/utils";
-import { Providers } from "@/providers/mod";
 import "@/styles/globals.css";
 import { Inter as FontSans } from "next/font/google";
 import { headers } from "next/headers";
@@ -26,7 +26,7 @@ export default function RootLayout({
       <body
         className={cn(
           "min-h-screen bg-background font-sans antialiased",
-          fontSans.variable
+          fontSans.variable,
         )}
       >
         <Providers initialState={initialState}>
