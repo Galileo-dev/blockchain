@@ -1,13 +1,13 @@
 "use client"
 
 import { useState } from "react"
+import { Wallet } from "@/types"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Download } from "lucide-react"
 import { useForm } from "react-hook-form"
 import { KeyStore } from "web3"
 import { z } from "zod"
 
-import { Wallet } from "@/types/wallet"
 import { generateKeyStoreFile, generateWallet } from "@/lib/web3"
 import { Button } from "@/components/ui/button"
 import {

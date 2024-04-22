@@ -1,11 +1,11 @@
 "use client"
 
+import { Wallet } from "@/types"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { KeyStore } from "web3"
 import { z } from "zod"
 
-import { Wallet } from "@/types/wallet"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,

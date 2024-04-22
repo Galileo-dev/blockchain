@@ -1,3 +1,4 @@
+import { Wallet } from "@/types"
 import { getWalletClient } from "@wagmi/core"
 import {
   custom,
@@ -15,8 +16,6 @@ import {
 import { rpc } from "viem/utils"
 import { ChainNotConfiguredError, createConnector } from "wagmi"
 import { KeyStore } from "web3"
-
-import { Wallet } from "@/types/wallet"
 
 import { config as wagmiConfig } from "./config"
 import { getAccountFromKeyStore } from "./web3"

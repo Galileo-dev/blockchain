@@ -1,8 +1,8 @@
 "use client"
 
+import { Wallet, Wallets } from "@/types"
 import { useConnect } from "wagmi"
 
-import { Wallet, Wallets } from "@/types/wallet"
 import { customConnector } from "@/lib/customConnector"
 
 import WalletCard from "./wallet-card"
