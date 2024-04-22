@@ -11,6 +11,9 @@ on:
     branches:
       - "main"
 
+defaults:
+  working-directory: "contracts"
+
 jobs:
   lint:
     runs-on: "ubuntu-latest"
