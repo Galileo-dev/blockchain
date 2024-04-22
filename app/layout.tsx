@@ -1,4 +1,3 @@
-import { config } from "@/lib/config"
 import { cn } from "@/lib/utils"
 import { Toaster } from "@/components/ui/toaster"
 import SiteHeader from "@/components/site-header"
@@ -7,8 +6,8 @@ import { Providers } from "@/components/site-providers"
 import "@/styles/globals.css"
 
 import { Inter as FontSans } from "next/font/google"
-import { headers } from "next/headers"
-import { cookieToInitialState } from "wagmi"
+
+// import { cookieToInitialState } from "wagmi"
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -20,7 +19,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
-  const initialState = cookieToInitialState(config, headers().get("cookie"))
+  // const initialState = cookieToInitialState(config, headers().get("cookie"))
 
   return (
     <html lang="en" suppressHydrationWarning>
@@ -31,7 +30,8 @@ export default function RootLayout({
           fontSans.variable
         )}
       >
-        <Providers initialState={initialState}>
+        {/* initialState={initialState} */}
+        <Providers>
           <div className="relative flex min-h-screen flex-col bg-background">
             <SiteHeader />
             <main className="flex flex-1 flex-col">{children}</main>
