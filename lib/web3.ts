@@ -1,9 +1,8 @@
-import { Address, PrivateKeyAccount } from "viem"
+import type { Wallet } from "@/types"
+import type { Address, PrivateKeyAccount } from "viem"
 import { privateKeyToAccount } from "viem/accounts"
-import { KeyStore, Web3 } from "web3"
-import { type Web3Account } from "web3-eth-accounts"
-
-import { Wallet } from "@/types/wallet"
+import { Web3, type KeyStore } from "web3"
+import type { Web3Account } from "web3-eth-accounts"
 
 const web3 = new Web3()
 
