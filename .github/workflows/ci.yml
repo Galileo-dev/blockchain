@@ -11,12 +11,12 @@ on:
     branches:
       - "main"
 
-defaults:
-  working-directory: "contracts"
-
 jobs:
   lint:
     runs-on: "ubuntu-latest"
+    defaults:
+      run:
+        working-directory: ./contracts
     steps:
       - name: "Check out the repo"
         uses: "actions/checkout@v4"
@@ -40,6 +40,9 @@ jobs:
 
   build:
     runs-on: "ubuntu-latest"
+    defaults:
+      run:
+        working-directory: ./contracts
     steps:
       - name: "Check out the repo"
         uses: "actions/checkout@v4"
@@ -64,6 +67,9 @@ jobs:
   test:
     needs: ["lint", "build"]
     runs-on: "ubuntu-latest"
+    defaults:
+      run:
+        working-directory: ./contracts
     steps:
       - name: "Check out the repo"
         uses: "actions/checkout@v4"
