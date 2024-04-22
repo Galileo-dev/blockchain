@@ -2,9 +2,9 @@
 
 import { useEffect } from "react"
 import { Wallet, Wallets } from "@/types"
+import { useLocalStorage } from "usehooks-ts"
 import { useDisconnect } from "wagmi"
 
-import useLocalStorage from "@/hooks/useLocalStorage"
 import { Separator } from "@/components/ui/separator"
 import { ImportWalletTrigger } from "@/components/web3/import-wallet-dialog"
 import { NewWalletTrigger } from "@/components/web3/new-wallet-dialog"
