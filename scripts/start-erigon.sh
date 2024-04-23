@@ -4,6 +4,7 @@ SCRIPT_DIR=$(dirname "$0")
 DATA_DIR="$SCRIPT_DIR/../.erigon/data"
 
 ERIGON_REPO_URL="https://github.com/ledgerwatch/erigon.git"
+ERIGON_REPO_BRANCH="ots2-alpha4"
 ERIGON_REPO_DIR="$SCRIPT_DIR/../services/erigon"
 
 ERIGON_BIN_DIR="$ERIGON_REPO_DIR/build/bin"
@@ -11,7 +12,7 @@ DEVNET_BINARY="$ERIGON_BIN_DIR/devnet"
 ERIGON_BINARY="$ERIGON_BIN_DIR/erigon"
 
 if [ ! -d "$ERIGON_REPO_DIR" ]; then
-        git clone  --recurse-submodules -j8 "$ERIGON_REPO_URL" "$ERIGON_REPO_DIR"
+        git clone --branch "$ERIGON_REPO_BRANCH" --single-branch --recurse-submodules -j8 "$ERIGON_REPO_URL" "$ERIGON_REPO_DIR"
 fi
 
 if [ ! -f "$ERIGON_BINARY" ]; then
