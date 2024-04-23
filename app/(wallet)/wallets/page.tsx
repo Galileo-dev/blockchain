@@ -1,28 +1,29 @@
-"use client"
+"use client";
 
-import { useEffect } from "react"
-import { Wallet, Wallets } from "@/types"
-import { useLocalStorage } from "usehooks-ts"
-import { useDisconnect } from "wagmi"
+import { Wallet, Wallets } from "@/types";
+import { useEffect } from "react";
+import { useLocalStorage } from "usehooks-ts";
+import { useDisconnect } from "wagmi";
 
-import { Separator } from "@/components/ui/separator"
-import { ImportWalletTrigger } from "@/components/web3/import-wallet-dialog"
-import { NewWalletTrigger } from "@/components/web3/new-wallet-dialog"
-
-import ExternalWalletCard from "./external-wallet-card"
-import InternalWalletCards from "./internal-wallet-cards"
+import ExternalWalletCard from "@/app/(wallet)/wallets/external-wallet-card";
+import InternalWalletCards from "@/app/(wallet)/wallets/internal-wallet-cards";
+import { Separator } from "@/components/ui/separator";
+import { ImportWalletTrigger } from "@/components/web3/import-wallet-dialog";
+import { NewWalletTrigger } from "@/components/web3/new-wallet-dialog";
 
 export default function Page() {
-  const { disconnect } = useDisconnect()
+  const { disconnect } = useDisconnect();
 
   useEffect(() => {
-    disconnect()
-  }, [disconnect])
+    disconnect();
+  }, [disconnect]);
 
-  const [wallets, setWallets] = useLocalStorage<Wallets>("wallets", [])
+  const [wallets, setWallets] = useLocalStorage<Wallets>("wallets", [], {
+    initializeWithValue: false,
+  });
 
   function addWallet(wallet: Wallet) {
-    setWallets((prevWallets) => [...prevWallets, wallet])
+    setWallets((prevWallets) => [...prevWallets, wallet]);
   }
 
   return (
@@ -44,5 +45,5 @@ export default function Page() {
         </div>
       </div>
     </>
-  )
+  );
 }

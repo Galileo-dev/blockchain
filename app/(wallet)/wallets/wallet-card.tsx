@@ -1,25 +1,21 @@
-"use client"
-
-import { useRouter } from "next/navigation"
+"use client";
 
 import {
   Card,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
+} from "@/components/ui/card";
 
 type WalletCardProps = {
   wallet: {
-    address: string
-    token: string
-  }
-  onClick: () => void
-}
+    address: string;
+    token: string;
+  };
+  onClick: () => void;
+};
 
 export default function WalletCard({ wallet, onClick }: WalletCardProps) {
-  const router = useRouter()
-
   return (
     <>
       <Card>
@@ -29,5 +25,5 @@ export default function WalletCard({ wallet, onClick }: WalletCardProps) {
         </CardHeader>
       </Card>
     </>
-  )
+  );
 }

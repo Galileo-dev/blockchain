@@ -1,12 +1,11 @@
-"use client"
+"use client";
 
-import { Wallet } from "@/types"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import { KeyStore } from "web3"
-import { z } from "zod"
+import { Wallet } from "@/types";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -14,7 +13,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"
+} from "@/components/ui/dialog";
 import {
   Form,
   FormControl,
@@ -23,12 +22,13 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { type KeyStore } from "web3";
 
 type ImportWalletTriggerProps = {
-  handler: (wallet: Wallet) => void
-}
+  handler: (wallet: Wallet) => void;
+};
 
 export function ImportWalletTrigger({ handler }: ImportWalletTriggerProps) {
   return (
@@ -46,50 +46,50 @@ export function ImportWalletTrigger({ handler }: ImportWalletTriggerProps) {
         <ImportWalletDialog handler={handler} />
       </DialogContent>
     </Dialog>
-  )
+  );
 }
 
 const importWalletFormSchema = z.object({
   key_store_file: z.any(), // Todo: add validation
   password: z.string(),
-})
+});
 
-type ImportWalletFormValues = z.infer<typeof importWalletFormSchema>
+type ImportWalletFormValues = z.infer<typeof importWalletFormSchema>;
 
 type ImportWalletDialogProps = {
-  handler: (account: Wallet) => void
-}
+  handler: (account: Wallet) => void;
+};
 
 const defaultValues: ImportWalletFormValues = {
   key_store_file: undefined,
   password: "",
-}
+};
 
 export function ImportWalletDialog({ handler }: ImportWalletDialogProps) {
   const form = useForm<ImportWalletFormValues>({
     resolver: zodResolver(importWalletFormSchema),
     mode: "onBlur",
     defaultValues,
-  })
+  });
 
   function onSubmit(values: ImportWalletFormValues) {
-    const reader = new FileReader()
+    const reader = new FileReader();
     // read the json file
     reader.onload = async function (e) {
-      let keyStore: KeyStore
+      let keyStore: KeyStore;
       try {
-        keyStore = JSON.parse(e.target?.result as string)
+        keyStore = JSON.parse(e.target?.result as string);
       } catch (error) {
         // show error if the file is not json
         form.setError("key_store_file", {
           type: "manual",
           message: "Invalid key store file",
-        })
-        return
+        });
+        return;
       }
-      handler(keyStore as Wallet)
-    }
-    reader.readAsText(values.key_store_file)
+      handler(keyStore as Wallet);
+    };
+    reader.readAsText(values.key_store_file);
   }
 
   return (
@@ -107,9 +107,9 @@ export function ImportWalletDialog({ handler }: ImportWalletDialogProps) {
                   {...field}
                   value={undefined} // needed for the input to work!
                   onChange={(e) => {
-                    const files = e.target.files
+                    const files = e.target.files;
                     if (files) {
-                      field.onChange(files[0])
+                      field.onChange(files[0]);
                     }
                   }}
                 />
@@ -137,5 +137,5 @@ export function ImportWalletDialog({ handler }: ImportWalletDialogProps) {
         <Button type="submit">Submit</Button>
       </form>
     </Form>
-  )
+  );
 }

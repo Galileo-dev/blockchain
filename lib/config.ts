@@ -1,14 +1,15 @@
-"use client"
+import { getDefaultConfig } from "connectkit";
+import { cookieStorage, createConfig, createStorage, http } from "wagmi";
+import { mainnet, sepolia } from "wagmi/chains";
 
-import { getDefaultConfig } from "connectkit"
-import { createConfig, http } from "wagmi"
-import { mainnet, sepolia } from "wagmi/chains"
-
-import { customChain } from "./customChain"
+import { customChain } from "./customChain";
 
 export const config = createConfig(
   getDefaultConfig({
     chains: [customChain],
+    storage: createStorage({
+      storage: cookieStorage,
+    }),
     ssr: true,
     walletConnectProjectId: process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID!,
     appName: "Orb",
@@ -17,5 +18,11 @@ export const config = createConfig(
       [sepolia.id]: http(),
       [customChain.id]: http(),
     },
-  })
-)
+  }),
+);
+
+declare module "wagmi" {
+  interface Register {
+    config: typeof config;
+  }
+}

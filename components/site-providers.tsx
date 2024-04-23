@@ -1,20 +1,19 @@
-"use client"
+"use client";
 
-import type { ReactNode } from "react"
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
-import { ConnectKitProvider } from "connectkit"
-import { WagmiProvider } from "wagmi"
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ConnectKitProvider } from "connectkit";
+import { useState, type ReactNode } from "react";
+import { State, WagmiProvider } from "wagmi";
 
-import { config } from "@/lib/config"
-import { ThemeProvider } from "@/components/theme-provider"
+import { ThemeProvider } from "@/components/theme-provider";
+import { config } from "@/lib/config";
 
-type Props = {
-  children: ReactNode
-}
+export function Providers(props: {
+  children: ReactNode;
+  initialState?: State;
+}) {
+  const [queryClient] = useState(() => new QueryClient());
 
-const queryClient = new QueryClient()
-
-export function Providers({ children }: Props) {
   return (
     <ThemeProvider
       attribute="class"
@@ -22,11 +21,13 @@ export function Providers({ children }: Props) {
       enableSystem
       disableTransitionOnChange
     >
-      <WagmiProvider config={config}>
+      <WagmiProvider config={config} initialState={props.initialState}>
         <QueryClientProvider client={queryClient}>
-          <ConnectKitProvider theme="midnight">{children}</ConnectKitProvider>
+          <ConnectKitProvider theme="midnight">
+            {props.children}
+          </ConnectKitProvider>
         </QueryClientProvider>
       </WagmiProvider>
     </ThemeProvider>
-  )
+  );
 }
