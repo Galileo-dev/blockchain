@@ -1,9 +1,6 @@
 import { getDefaultConfig } from "connectkit";
 import { cookieStorage, createConfig, createStorage, http } from "wagmi";
-import { mainnet, sepolia } from "wagmi/chains";
-
-import { localhost } from "wagmi/chains";
-import { customChain } from "./customChain";
+import { localhost, sepolia } from "wagmi/chains";
 
 export const config = createConfig(
   getDefaultConfig({
@@ -15,9 +12,8 @@ export const config = createConfig(
     walletConnectProjectId: process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID!,
     appName: "Orb",
     transports: {
-      [mainnet.id]: http(),
+      [localhost.id]: http(),
       [sepolia.id]: http(),
-      [customChain.id]: http(),
     },
   }),
 );
