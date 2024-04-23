@@ -2,11 +2,12 @@ import { getDefaultConfig } from "connectkit";
 import { cookieStorage, createConfig, createStorage, http } from "wagmi";
 import { mainnet, sepolia } from "wagmi/chains";
 
+import { localhost } from "wagmi/chains";
 import { customChain } from "./customChain";
 
 export const config = createConfig(
   getDefaultConfig({
-    chains: [customChain],
+    chains: [localhost, sepolia],
     storage: createStorage({
       storage: cookieStorage,
     }),
