@@ -7,7 +7,6 @@ const withBundleAnalyzer = bundleAnalyzer({
 /** @type {import('next').NextConfig} */
 // https://github.com/wevm/wagmi/blob/main/playgrounds/next/next.config.mjs
 const nextConfig = {
-  reactStrictMode: true,
   experimental: {
     externalDir: true,
   },
