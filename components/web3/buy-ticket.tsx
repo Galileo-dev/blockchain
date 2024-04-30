@@ -1,14 +1,15 @@
+"use client";
+
 import { Button } from "@/components/ui/moving-border";
 import { useReadContracts } from "wagmi";
 
 type BuyTicketProps = {
-  contractAddress: string;
+  contracts: any;
 };
 
-export default function BuyTicket({ contractAddress }: BuyTicketProps) {
-  const result = useReadContracts();
-
-  const ticketPrice;
+export default function BuyTicket({ contracts }: BuyTicketProps) {
+  const { data, error, isPending } = useReadContracts(contracts);
+  const [decimals, name, symbol, totalSupply] = data || [];
 
   return (
     <div>
@@ -24,7 +25,7 @@ export default function BuyTicket({ contractAddress }: BuyTicketProps) {
       >
         Borders are cool
       </Button>
-      {contractAddress}
+      {/* {contractAddress} */}
     </div>
   );
 }
