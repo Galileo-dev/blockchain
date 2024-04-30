@@ -1,13 +1,13 @@
-import { DashboardConfig } from "types"
+import { DashboardConfig } from "types";
 
 export const dashboardConfig: DashboardConfig = {
   sidebarNav: [
+    { title: "Ticket", href: "/wallet/ticket", icon: "Ticket" },
     {
-      title: "Wallet",
-      href: "/dashboard/transactions",
-      icon: "ArrowLeftRight",
+      title: "Utils",
+      href: "/wallet/transaction",
+      icon: "Wrench",
     },
-    { title: "Friends", href: "/dashboard/send", icon: "PersonStanding" },
     {
       title: "Back to Wallets",
       href: "/wallets",
@@ -15,4 +15,4 @@ export const dashboardConfig: DashboardConfig = {
       bottom: true,
     },
   ],
-}
+};

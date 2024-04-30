@@ -19,9 +19,9 @@ export default function SiteHeader() {
           <Logo size={35} className="mx-2" />
           <SiteNav className="mx-6" />
           <div className="ml-auto flex items-center space-x-4">
-            {!pathname.includes("/dashboard") && (
+            {!pathname.includes("/wallet") && (
               <Button variant="outline" asChild>
-                <Link href="/wallets">Dashboard</Link>
+                <Link href="/wallets">Wallet</Link>
               </Button>
             )}
             <ModeToggle />

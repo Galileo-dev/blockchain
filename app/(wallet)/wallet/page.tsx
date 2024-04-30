@@ -1,15 +1,5 @@
-"use client"
-
-import { SendCrypto } from "@/components/web3/send-crypto"
+import { redirect } from "next/navigation";
 
 export default function Wallet() {
-  return (
-    <>
-      <div className="container mx-auto flex flex-1 flex-col items-center justify-center">
-        <div className="space-y-2 overflow-scroll">
-          <SendCrypto />
-        </div>
-      </div>
-    </>
-  )
+  redirect("/wallet/ticket");
 }
