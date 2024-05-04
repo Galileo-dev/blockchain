@@ -29,3 +29,10 @@ export type SidebarNavItem = {
 export type DashboardConfig = {
   sidebarNav: SidebarNavItem[];
 };
+
+export type PaymentMethodOptions = PaymentMethodOption[];
+
+export type PaymentMethodOption = {
+  title: string;
+  onClick: () => void;
+};

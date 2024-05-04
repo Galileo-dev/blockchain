@@ -7,6 +7,7 @@ import {
   TicketTitle,
 } from "@/components/ui/ticket";
 import Image from "next/image";
+import Link from "next/link";
 
 const photoUrl = "/event01.png";
 
@@ -40,7 +41,9 @@ export default function Home() {
                 <Button variant="outline" className="flex-1">
                   Details
                 </Button>
-                <Button className="flex-1">Buy Now</Button>
+                <Button className="flex-1" asChild>
+                  <Link href="/get-ticket">Buy Now</Link>
+                </Button>
               </div>
             </TicketFooter>
           </Ticket>
