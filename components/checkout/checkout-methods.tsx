@@ -1,18 +1,54 @@
-import { CheckoutExternalWallet } from "@/components/checkout/checkout-methods-option-external";
-import { CheckoutMethodOptions } from "@/components/checkout/checkout-methods-options";
-import { Card, CardHeader, CardTitle } from "@/components/ui/card";
-import { LocalWalletProvider } from "@/context/local-wallet-context";
+"use client";
+import { CheckoutMethod } from "@/components/checkout/checkout-method";
+import { Card } from "@/components/ui/card";
+import { RadioGroup } from "@/components/ui/radio-group";
+import useLocalWallet from "@/hooks/use-local-wallets";
+import { Wallet } from "@/types";
+import { useEffect, useState } from "react";
+import { useAccount } from "wagmi";
 
-export default function CheckoutMethod() {
+export function CheckoutMethods() {
+  const { isDisconnected } = useAccount();
+  const { openModal, connectWallet } = useLocalWallet();
+  const [selected, setSelected] = useState<Wallet | undefined>();
+
+  useEffect(() => {
+    if (selected) {
+      connectWallet(selected);
+    }
+  }, [selected]);
+
+  useEffect(() => {
+    if (selected && isDisconnected) {
+      setSelected(undefined);
+    }
+  }, [isDisconnected]);
+
+  const { wallets } = useLocalWallet();
+
   return (
-    <Card className="w-full rounded-3xl p-4">
-      <CardHeader className="flex flex-row items-center justify-between w-full">
-        <CardTitle className="text-md">Payment method</CardTitle>
-        <CheckoutExternalWallet />
-      </CardHeader>
-      <LocalWalletProvider>
-        <CheckoutMethodOptions />
-      </LocalWalletProvider>
+    <Card className="w-full">
+      <RadioGroup
+        value={selected ? selected.address : ""}
+        className="flex flex-col gap-0"
+      >
+        {wallets.map((wallet) => (
+          <CheckoutMethod
+            key={wallet.address}
+            title={wallet.address}
+            icon="Wallet"
+            isSelect={true}
+            onClick={() => {
+              setSelected(wallet);
+            }}
+          />
+        ))}
+      </RadioGroup>
+      <CheckoutMethod
+        title="Add payment method"
+        icon="Plus"
+        onClick={openModal}
+      />
     </Card>
   );
 }

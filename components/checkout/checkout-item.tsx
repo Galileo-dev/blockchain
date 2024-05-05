@@ -12,11 +12,7 @@ interface CheckoutItemProps {
   price: number;
 }
 
-export default function CheckoutItem({
-  title,
-  info,
-  price,
-}: CheckoutItemProps) {
+export default function ({ title, info, price }: CheckoutItemProps) {
   return (
     <Card className="w-full rounded-3xl">
       <CardHeader className="flex flex-row items-center justify-between w-full">

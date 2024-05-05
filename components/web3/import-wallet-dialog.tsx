@@ -37,15 +37,20 @@ export function ImportWalletTrigger({ handler }: ImportWalletTriggerProps) {
         <Button variant="outline">Import</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
-        <DialogHeader>
-          <DialogTitle>Import a wallet</DialogTitle>
-          <DialogDescription>
-            Import a wallet by uploading a key store file.
-          </DialogDescription>
-        </DialogHeader>
         <ImportWalletDialog handler={handler} />
       </DialogContent>
     </Dialog>
+  );
+}
+
+export function ImportWalletHeader() {
+  return (
+    <DialogHeader>
+      <DialogTitle>Import a wallet</DialogTitle>
+      <DialogDescription>
+        Import a wallet by uploading a key store file.
+      </DialogDescription>
+    </DialogHeader>
   );
 }
 
@@ -93,49 +98,52 @@ export function ImportWalletDialog({ handler }: ImportWalletDialogProps) {
   }
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-        <FormField
-          control={form.control}
-          name="key_store_file"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Key Store File</FormLabel>
-              <FormControl>
-                <Input
-                  type="file"
-                  {...field}
-                  value={undefined} // needed for the input to work!
-                  onChange={(e) => {
-                    const files = e.target.files;
-                    if (files) {
-                      field.onChange(files[0]);
-                    }
-                  }}
-                />
-              </FormControl>
-              <FormDescription>
-                This is your wallets private key.
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="password"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Key store password</FormLabel>
-              <FormControl>
-                <Input type="password" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <Button type="submit">Submit</Button>
-      </form>
-    </Form>
+    <>
+      <ImportWalletHeader />
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+          <FormField
+            control={form.control}
+            name="key_store_file"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Key Store File</FormLabel>
+                <FormControl>
+                  <Input
+                    type="file"
+                    {...field}
+                    value={undefined} // needed for the input to work!
+                    onChange={(e) => {
+                      const files = e.target.files;
+                      if (files) {
+                        field.onChange(files[0]);
+                      }
+                    }}
+                  />
+                </FormControl>
+                <FormDescription>
+                  This is your wallets private key.
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="password"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Key store password</FormLabel>
+                <FormControl>
+                  <Input type="password" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <Button type="submit">Submit</Button>
+        </form>
+      </Form>
+    </>
   );
 }

@@ -34,5 +34,5 @@ export type PaymentMethodOptions = PaymentMethodOption[];
 
 export type PaymentMethodOption = {
   title: string;
-  onClick: () => void;
+  onClick?: () => void;
 };

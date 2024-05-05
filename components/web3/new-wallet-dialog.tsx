@@ -39,16 +39,21 @@ export function NewWalletTrigger({ handler }: NewWalletTriggerProps) {
         <Button variant="outline">New</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
-        <DialogHeader>
-          <DialogTitle>Create a wallet</DialogTitle>
-          <DialogDescription>
-            Create a wallet by generating a key store file encrypted with a
-            password.
-          </DialogDescription>
-        </DialogHeader>
         <NewWalletDialog handler={handler} />
       </DialogContent>
     </Dialog>
+  );
+}
+
+export function NewWalletHeader() {
+  return (
+    <DialogHeader>
+      <DialogTitle>Create a wallet</DialogTitle>
+      <DialogDescription>
+        Create a wallet by generating a key store file encrypted with a
+        password.
+      </DialogDescription>
+    </DialogHeader>
   );
 }
 
@@ -92,35 +97,38 @@ export function NewWalletDialog({ handler }: NewWalletDialogProps) {
   }
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-        <FormField
-          control={form.control}
-          name="password"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Key store password</FormLabel>
-              <FormControl>
-                <Input type="password" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <Button type="submit">Generate</Button>
-      </form>
-      {keystore && (
-        <div className=" flex items-center space-x-4 rounded-md border p-4">
-          <Download />
-          <div className="flex-1 space-y-1">
-            <p className="text-sm font-medium leading-none">Key Store</p>
-            <p className="text-sm text-muted-foreground">
-              You should keep this in a safe place.
-            </p>
+    <>
+      <NewWalletHeader />
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+          <FormField
+            control={form.control}
+            name="password"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Key store password</FormLabel>
+                <FormControl>
+                  <Input type="password" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <Button type="submit">Generate</Button>
+        </form>
+        {keystore && (
+          <div className=" flex items-center space-x-4 rounded-md border p-4">
+            <Download />
+            <div className="flex-1 space-y-1">
+              <p className="text-sm font-medium leading-none">Key Store</p>
+              <p className="text-sm text-muted-foreground">
+                You should keep this in a safe place.
+              </p>
+            </div>
+            <Button onClick={downloadKeystore}>Download</Button>
           </div>
-          <Button onClick={downloadKeystore}>Download</Button>
-        </div>
-      )}
-    </Form>
+        )}
+      </Form>
+    </>
   );
 }

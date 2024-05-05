@@ -1,13 +1,14 @@
 import { LocalWalletModal } from "@/components/local-wallet-modal";
 import { customConnector } from "@/lib/customConnector";
-import { Wallet } from "@/types";
+import { Wallet, Wallets } from "@/types";
 import { createContext, useState } from "react";
+import { useLocalStorage } from "usehooks-ts";
 import { useConnect } from "wagmi";
 
 interface LocalWalletContextType {
   wallets: Wallet[];
   addWallet: (wallet: Wallet) => void;
-  connectWallet: (wallet: Wallet) => void;
+  connectWallet: (wallet: Wallet) => Promise<void>;
   isModalOpen: boolean;
   openModal: () => void;
   closeModal: () => void;
@@ -16,14 +17,16 @@ interface LocalWalletContextType {
 const LocalWalletContext = createContext<LocalWalletContextType>({
   wallets: [],
   addWallet: () => {},
-  connectWallet: () => {},
+  connectWallet: async () => {},
   isModalOpen: false,
   openModal: () => {},
   closeModal: () => {},
 });
 
 const LocalWalletProvider = ({ children }: { children: React.ReactNode }) => {
-  const [wallets, setWallets] = useState<Wallet[]>([]);
+  const [wallets, setWallets] = useLocalStorage<Wallets>("wallets", [], {
+    initializeWithValue: false,
+  });
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { connect } = useConnect();
 
@@ -39,8 +42,8 @@ const LocalWalletProvider = ({ children }: { children: React.ReactNode }) => {
     setIsModalOpen(false);
   };
 
-  const connectWallet = (wallet: Wallet) => {
-    connect({ connector: customConnector() });
+  const connectWallet = async (wallet: Wallet) => {
+    await connect({ connector: customConnector() });
   };
 
   return (
@@ -56,7 +59,11 @@ const LocalWalletProvider = ({ children }: { children: React.ReactNode }) => {
     >
       {children}
       {isModalOpen && (
-        <LocalWalletModal closeModal={closeModal} isModalOpen={isModalOpen} />
+        <LocalWalletModal
+          closeModal={closeModal}
+          isModalOpen={isModalOpen}
+          addLocalWallet={addWallet}
+        />
       )}
     </LocalWalletContext.Provider>
   );

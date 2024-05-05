@@ -1,23 +1,24 @@
 import { CardDescription, CardHeader } from "@/components/ui/card";
+import { RadioGroupItem } from "@/components/ui/radio-group";
 import { PaymentMethodOption } from "@/types";
 import { icons } from "lucide-react";
 
-// extend the PaymentMethodOption type but add icon
 type CheckoutMethodOptionProps = PaymentMethodOption & {
   icon?: string;
-  isSelected: boolean;
+  isSelect?: boolean;
 };
 
-export function CheckoutMethodOption({
+export function CheckoutMethod({
   title,
-  isSelected,
+  isSelect = false,
   icon,
   onClick,
 }: CheckoutMethodOptionProps) {
   const Icon = icon && icons[icon];
+
   return (
     <CardHeader
-      className="flex-row items-center space-x-4 border-b"
+      className="flex-row items-center space-x-4 border-b cursor-pointer"
       onClick={onClick}
     >
       {icon && (
@@ -25,7 +26,11 @@ export function CheckoutMethodOption({
           <Icon size={24} className="text-muted-foreground" />
         </div>
       )}
-      <CardDescription>{title}</CardDescription>
+      <CardDescription className="overflow-hidden truncate select-none">
+        {title}
+      </CardDescription>
+      <div className="flex-1" />
+      {isSelect && <RadioGroupItem value={title} />}
     </CardHeader>
   );
 }
