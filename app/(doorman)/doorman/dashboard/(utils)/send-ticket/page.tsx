@@ -1,6 +1,6 @@
 import { SendCrypto } from "@/components/web3/send-crypto";
 
-export default function TransactionPage() {
+export default function SendTicketPage() {
   return (
     <>
       <div className="container mx-auto flex flex-1 flex-col items-center justify-center">

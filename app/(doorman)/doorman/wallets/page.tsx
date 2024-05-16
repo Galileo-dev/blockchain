@@ -5,8 +5,8 @@ import { useEffect } from "react";
 import { useLocalStorage } from "usehooks-ts";
 import { useDisconnect } from "wagmi";
 
-import ExternalWalletCard from "@/app/(wallet)/wallets/external-wallet-card";
-import InternalWalletCards from "@/app/(wallet)/wallets/internal-wallet-cards";
+import ExternalWalletCard from "@/app/(doorman)/doorman/wallets/external-wallet-card";
+import InternalWalletCards from "@/app/(doorman)/doorman/wallets/internal-wallet-cards";
 import { Separator } from "@/components/ui/separator";
 import { ImportWalletTrigger } from "@/components/web3/import-wallet-dialog";
 import { NewWalletTrigger } from "@/components/web3/new-wallet-dialog";

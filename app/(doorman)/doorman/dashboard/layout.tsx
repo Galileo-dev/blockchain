@@ -19,7 +19,7 @@ export default function RootLayout({
   // redirect to /wallets if no wallet is selected
   const { isConnected, address, chain } = useAccount();
   if (!isConnected) {
-    return redirect("/wallets");
+    return redirect("/doorman/wallets");
   }
 
   const addressBlockExplorer =

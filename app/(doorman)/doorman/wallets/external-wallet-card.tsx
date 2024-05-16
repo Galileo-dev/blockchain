@@ -1,33 +1,33 @@
-"use client"
+"use client";
 
-import { useEffect } from "react"
-import { useRouter } from "next/navigation"
-import { ConnectKitButton } from "connectkit"
-import { useDisconnect } from "wagmi"
+import { ConnectKitButton } from "connectkit";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+import { useDisconnect } from "wagmi";
 
 import {
   Card,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
+} from "@/components/ui/card";
 
-type ExternalWalletCardProps = {}
+type ExternalWalletCardProps = {};
 
 export default function ExternalWalletCard({}: ExternalWalletCardProps) {
-  const router = useRouter()
-  const { disconnect } = useDisconnect()
+  const router = useRouter();
+  const { disconnect } = useDisconnect();
 
   useEffect(() => {
-    disconnect()
-  }, [disconnect])
+    disconnect();
+  }, [disconnect]);
 
   return (
     <>
       <ConnectKitButton.Custom>
         {({ isConnected, show }) => {
           if (isConnected) {
-            router.push(`/wallet`)
+            router.push(`/doorman/dashboard`);
           }
 
           return (
@@ -39,9 +39,9 @@ export default function ExternalWalletCard({}: ExternalWalletCardProps) {
                 </CardDescription>
               </CardHeader>
             </Card>
-          )
+          );
         }}
       </ConnectKitButton.Custom>
     </>
-  )
+  );
 }

@@ -21,7 +21,7 @@ export default function SiteHeader() {
           <div className="ml-auto flex items-center space-x-4">
             {!pathname.includes("/wallet") && (
               <Button variant="outline" asChild>
-                <Link href="/wallets">Wallet</Link>
+                <Link href="/doorman">Door Man</Link>
               </Button>
             )}
             <ModeToggle />

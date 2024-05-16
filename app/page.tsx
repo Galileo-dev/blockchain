@@ -39,7 +39,7 @@ export default function Home() {
               {/* space between and center */}
               <div className="w-full flex gap-2 justify-between items-center">
                 <Button variant="outline" className="flex-1">
-                  Details
+                  <Link href="/show-ticket">Show</Link>
                 </Button>
                 <Button className="flex-1" asChild>
                   <Link href="/get-ticket">Buy Now</Link>

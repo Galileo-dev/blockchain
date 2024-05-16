@@ -2,15 +2,19 @@ import { DashboardConfig } from "types";
 
 export const dashboardConfig: DashboardConfig = {
   sidebarNav: [
-    { title: "Ticket", href: "/wallet/ticket", icon: "Ticket" },
     {
-      title: "Utils",
-      href: "/wallet/transaction",
-      icon: "Wrench",
+      title: "Check Ticket",
+      href: "/doorman/dashboard/check-ticket",
+      icon: "ScanBarcode",
     },
     {
-      title: "Back to Wallets",
-      href: "/wallets",
+      title: "Send Ticket",
+      href: "/doorman/dashboard/send-ticket",
+      icon: "TicketPlus",
+    },
+    {
+      title: "Change Wallet",
+      href: "/doorman/wallets",
       icon: "ArrowLeft",
       bottom: true,
     },
