@@ -11,7 +11,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { LocalWalletProvider } from "@/context/local-wallet-context";
 import { useEffect, useState } from "react";
 import { useAccount, useDisconnect } from "wagmi";
 
@@ -41,9 +40,7 @@ export default function Checkout() {
           <CheckoutMethodExternal />
         </CardHeader>
         {!isConnected || isLocalWallet ? (
-          <LocalWalletProvider>
-            <CheckoutMethods />
-          </LocalWalletProvider>
+          <CheckoutMethods />
         ) : (
           <Card className="w-full">
             <CardHeader className="flex-row items-center space-x-4">

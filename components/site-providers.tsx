@@ -6,6 +6,7 @@ import { useState, type ReactNode } from "react";
 import { State, WagmiProvider } from "wagmi";
 
 import { ThemeProvider } from "@/components/theme-provider";
+import { LocalWalletProvider } from "@/context/local-wallet-context";
 import { config } from "@/lib/config";
 
 export function Providers(props: {
@@ -24,7 +25,7 @@ export function Providers(props: {
       <WagmiProvider config={config} initialState={props.initialState}>
         <QueryClientProvider client={queryClient}>
           <ConnectKitProvider theme="midnight">
-            {props.children}
+            <LocalWalletProvider>{props.children}</LocalWalletProvider>
           </ConnectKitProvider>
         </QueryClientProvider>
       </WagmiProvider>

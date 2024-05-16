@@ -78,10 +78,10 @@ export const TicketSeparator = (
     >
       <div className="flex justify-between items-center w-full">
         <div
-          className="rounded-full w-7 h-7 bg-card border text-card-foreground shadow-sm" // Adjusted width from w-5 to w-10
+          className="rounded-full w-7 h-7 bg-card border text-card-foreground shadow-sm"
           style={{
             clipPath: "polygon(45.5% 0%, 100% 0%, 100% 100%, 45.5% 100%)",
-            marginLeft: "-0.875rem", // Adjusted for a more pronounced cut effect
+            marginLeft: "-0.875rem",
             boxShadow: "inset 0 1px 2px 0 rgba(0, 0, 0, 0.05)",
           }}
         />
@@ -91,8 +91,8 @@ export const TicketSeparator = (
         <div
           className="rounded-full w-7 h-7 bg-card border text-card-foreground"
           style={{
-            clipPath: "polygon(0% 0%, 54.5% 0%, 54.5% 100%, 0% 100%)", // Inverted cut effect
-            marginRight: "-0.875rem", // Adjusted alignment after inversion
+            clipPath: "polygon(0% 0%, 54.5% 0%, 54.5% 100%, 0% 100%)",
+            marginRight: "-0.875rem",
             boxShadow: "inset 0 1px 2px 0 rgba(0, 0, 0, 0.05)",
           }}
         />

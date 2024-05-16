@@ -1,5 +1,5 @@
 "use client";
-import { ShowMethod } from "@/components/show/show-method";
+import { ShowMethod } from "@/components/show-ticket/show-method";
 import { Card } from "@/components/ui/card";
 import { RadioGroup } from "@/components/ui/radio-group";
 import useLocalWallet from "@/hooks/use-local-wallets";
@@ -44,7 +44,7 @@ export function ShowMethods() {
           />
         ))}
       </RadioGroup>
-      <ShowMethod title="Add payment method" icon="Plus" onClick={openModal} />
+      <ShowMethod title="Add verify wallet" icon="Plus" onClick={openModal} />
     </Card>
   );
 }

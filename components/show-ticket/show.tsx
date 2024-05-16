@@ -1,6 +1,5 @@
 "use client";
 
-import ShowItem from "@/components/show-ticket/show-item";
 import { ShowMethods } from "@/components/show-ticket/show-methods";
 import { ShowMethodExternal } from "@/components/show-ticket/show-methods-external";
 import { ShowSubmit } from "@/components/show-ticket/show-submit";
@@ -11,7 +10,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { LocalWalletProvider } from "@/context/local-wallet-context";
 import { useEffect, useState } from "react";
 import { useAccount, useDisconnect } from "wagmi";
 
@@ -30,20 +28,13 @@ export default function Show() {
 
   return (
     <>
-      <ShowItem
-        title="Electric Picnic"
-        info={["02-09-2024", "Stradbally, Co. Laois"]}
-        price={250}
-      />
       <Card className="w-full rounded-3xl p-4 space-y-4">
         <CardHeader className="flex flex-row items-center justify-between w-full p-2">
-          <CardTitle className="text-md">Payment method</CardTitle>
+          <CardTitle className="text-md">Choose a wallet to verify</CardTitle>
           <ShowMethodExternal />
         </CardHeader>
         {!isConnected || isLocalWallet ? (
-          <LocalWalletProvider>
-            <ShowMethods />
-          </LocalWalletProvider>
+          <ShowMethods />
         ) : (
           <Card className="w-full">
             <CardHeader className="flex-row items-center space-x-4">
@@ -64,7 +55,7 @@ export default function Show() {
           </Card>
         )}
 
-        <ShowSubmit onSubmit={() => {}} />
+        <ShowSubmit />
       </Card>
     </>
   );

@@ -1,17 +1,5 @@
-import { Button } from "@/components/ui/button";
+import { ShowPopup } from "@/components/show-ticket/show-popup";
 
-interface ShowSubmitProps {
-  onSubmit: () => void;
-}
-
-export function ShowSubmit({ onSubmit }: ShowSubmitProps) {
-  return (
-    <Button
-      onClick={onSubmit}
-      className="w-full bg-blue-600 text-white hover:bg-blue-700"
-      size="lg"
-    >
-      Show
-    </Button>
-  );
+export function ShowSubmit() {
+  return <ShowPopup />;
 }

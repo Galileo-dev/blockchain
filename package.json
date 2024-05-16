@@ -44,6 +44,7 @@
     "react-dom": "^18.2.0",
     "react-element-to-jsx-string": "^15.0.0",
     "react-hook-form": "^7.51.3",
+    "react-qr-rounded": "^1.0.0",
     "sharp": "^0.33.3",
     "usehooks-ts": "^3.1.0",
     "viem": "2.x",

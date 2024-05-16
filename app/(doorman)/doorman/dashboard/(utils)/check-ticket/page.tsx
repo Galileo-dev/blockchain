@@ -1,8 +1,10 @@
 export default function CheckTicketPage() {
   return (
     <>
-      <div className="container mx-auto flex flex-1 flex-col items-center justify-center">
-        <div className="space-y-2 overflow-scroll">{/* <CheckTicket/> */}</div>
+      <div className="flex flex-1 flex-col items-center justify-center space-y-2">
+        <div className="container mx-auto my-20 flex flex-1 flex-col items-center justify-center space-y-2">
+          <div className="space-y-4 max-w-2xl w-full"></div>
+        </div>
       </div>
     </>
   );
