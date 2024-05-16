@@ -1,13 +1,13 @@
 "use client";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { ConnectKitProvider } from "connectkit";
 import { useState, type ReactNode } from "react";
 import { State, WagmiProvider } from "wagmi";
 
 import { ThemeProvider } from "@/components/theme-provider";
 import { LocalWalletProvider } from "@/context/local-wallet-context";
 import { config } from "@/lib/config";
+import { ConnectKitProvider } from "connectkit";
 
 export function Providers(props: {
   children: ReactNode;

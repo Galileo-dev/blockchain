@@ -3,7 +3,8 @@ import { customConnector } from "@/lib/customConnector";
 import { Wallet, Wallets } from "@/types";
 import { createContext, useState } from "react";
 import { useLocalStorage } from "usehooks-ts";
-import { useConnect } from "wagmi";
+import { Address } from "viem";
+import { useAccount, useConnect, useDisconnect } from "wagmi";
 
 interface LocalWalletContextType {
   wallets: Wallet[];
@@ -28,6 +29,8 @@ const LocalWalletProvider = ({ children }: { children: React.ReactNode }) => {
     initializeWithValue: false,
   });
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const { isConnected } = useAccount();
+  const { disconnect } = useDisconnect();
   const { connect } = useConnect();
 
   const addWallet = (wallet: Wallet) => {
@@ -43,7 +46,13 @@ const LocalWalletProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const connectWallet = async (wallet: Wallet) => {
-    await connect({ connector: customConnector() });
+    if (isConnected) {
+      await disconnect();
+    }
+
+    await connect({
+      connector: customConnector({ selected: wallet.address as Address }),
+    });
   };
 
   return (

@@ -9,22 +9,20 @@ import { useAccount } from "wagmi";
 
 export function CheckoutMethods() {
   const { isDisconnected } = useAccount();
-  const { openModal, connectWallet } = useLocalWallet();
+  const { openModal, connectWallet, wallets } = useLocalWallet();
   const [selected, setSelected] = useState<Wallet | undefined>();
 
   useEffect(() => {
     if (selected) {
       connectWallet(selected);
     }
-  }, [selected, connectWallet]);
+  }, [selected]);
 
   useEffect(() => {
-    if (selected && isDisconnected) {
+    if (isDisconnected && selected) {
       setSelected(undefined);
     }
-  }, [isDisconnected, selected]);
-
-  const { wallets } = useLocalWallet();
+  }, [isDisconnected]);
 
   return (
     <Card className="w-full">
@@ -38,9 +36,7 @@ export function CheckoutMethods() {
             title={wallet.address}
             icon="Wallet"
             isSelect={true}
-            onClick={() => {
-              setSelected(wallet);
-            }}
+            onClick={() => setSelected(wallet)}
           />
         ))}
       </RadioGroup>

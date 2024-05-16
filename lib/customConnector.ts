@@ -18,15 +18,19 @@ import { ChainNotConfiguredError, createConnector } from "wagmi";
 import { config as wagmiConfig } from "./config";
 import { getAccountFromKeyStore } from "./web3";
 
-export type CustomConnectorParameters = {};
+export type CustomConnectorParameters = {
+  selected?: Address;
+};
 
 customConnector.type = "custom" as const;
-export function customConnector({}: CustomConnectorParameters = {}) {
+export function customConnector({ selected }: CustomConnectorParameters = {}) {
   type Provider = ReturnType<
     Transport<"custom", {}, EIP1193RequestFn<WalletRpcSchema>>
   >;
   let connected = false;
   let connectedChainId: number;
+  selected =
+    selected && !selected.startsWith("0x") ? `0x${selected}` : selected;
 
   return createConnector<Provider>((config) => ({
     id: "custom",
@@ -110,7 +114,18 @@ export function customConnector({}: CustomConnectorParameters = {}) {
           const accounts = JSON.parse(localStorageWallets).map((x: Wallet) => {
             return !x.address.startsWith("0x") ? `0x${x.address}` : x.address;
           });
+
+          if (selected) {
+            const index = accounts.findIndex(
+              (account) => account.toLowerCase() === selected.toLowerCase(),
+            );
+            if (index !== -1) {
+              const [selectedAccount] = accounts.splice(index, 1);
+              accounts.unshift(selectedAccount);
+            }
+          }
           console.log("accounts", accounts);
+          console.log("selected", selected);
           return accounts;
         }
         if (method === "eth_sendTransaction") {
