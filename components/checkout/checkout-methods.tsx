@@ -16,13 +16,13 @@ export function CheckoutMethods() {
     if (selected) {
       connectWallet(selected);
     }
-  }, [selected]);
+  }, [selected, connectWallet]);
 
   useEffect(() => {
     if (selected && isDisconnected) {
       setSelected(undefined);
     }
-  }, [isDisconnected]);
+  }, [isDisconnected, selected]);
 
   const { wallets } = useLocalWallet();
 

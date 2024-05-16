@@ -36,7 +36,7 @@ const TicketTitle = React.forwardRef<
   <h3
     ref={ref}
     className={cn(
-      "text-lg font-semibold leading-none tracking-tight pb-3",
+      "pb-3 text-lg font-semibold leading-none tracking-tight",
       className,
     )}
     {...props}
@@ -72,13 +72,13 @@ export const TicketSeparator = (
     <div
       ref={ref}
       className={cn(
-        "relative my-5 pt-5 flex justify-center items-center overflow-visible",
+        "relative my-5 flex items-center justify-center overflow-visible pt-5",
         className,
       )}
     >
-      <div className="flex justify-between items-center w-full">
+      <div className="flex w-full items-center justify-between">
         <div
-          className="rounded-full w-7 h-7 bg-card border text-card-foreground shadow-sm"
+          className="size-7 rounded-full border bg-card text-card-foreground shadow-sm"
           style={{
             clipPath: "polygon(45.5% 0%, 100% 0%, 100% 100%, 45.5% 100%)",
             marginLeft: "-0.875rem",
@@ -86,10 +86,10 @@ export const TicketSeparator = (
           }}
         />
         {Array.from({ length: 9 }).map((_, index) => (
-          <div key={index} className="w-4 h-4 bg-card rounded-full border" />
+          <div key={index} className="size-4 rounded-full border bg-card" />
         ))}
         <div
-          className="rounded-full w-7 h-7 bg-card border text-card-foreground"
+          className="size-7 rounded-full border bg-card text-card-foreground"
           style={{
             clipPath: "polygon(0% 0%, 54.5% 0%, 54.5% 100%, 0% 100%)",
             marginRight: "-0.875rem",

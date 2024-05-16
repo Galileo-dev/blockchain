@@ -34,7 +34,7 @@ export function ShowPopup() {
               Please present your ticket to the scanner
             </SheetDescription>
           </SheetHeader>
-          <div className="grid gap-4 py-4 mx-auto w-[250px]">
+          <div className="mx-auto grid w-[250px] gap-4 py-4">
             <OrbQRCode address={address} />
           </div>
           <SheetFooter>

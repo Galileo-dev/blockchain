@@ -80,7 +80,7 @@ function WalletOptions({
           Local wallets are stored in local storage and encrypted until needed.
         </DialogDescription>
       </DialogHeader>
-      <div className="flex flex-1 space-x-8 justify-center items-center p-8">
+      <div className="flex flex-1 items-center justify-center space-x-8 p-8">
         <Button onClick={() => onSelectOption(ModalStep.CREATE_WALLET)}>
           Add Wallet
         </Button>

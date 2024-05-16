@@ -18,15 +18,15 @@ export function ShowMethod({
 
   return (
     <CardHeader
-      className="flex-row items-center space-x-4 border-b cursor-pointer"
+      className="cursor-pointer flex-row items-center space-x-4 border-b"
       onClick={onClick}
     >
       {icon && (
-        <div className="rounded-lg p-2 px-4 border">
+        <div className="rounded-lg border p-2 px-4">
           <Icon size={24} className="text-muted-foreground" />
         </div>
       )}
-      <CardDescription className="overflow-hidden truncate select-none">
+      <CardDescription className="select-none overflow-hidden truncate">
         {title}
       </CardDescription>
       <div className="flex-1" />

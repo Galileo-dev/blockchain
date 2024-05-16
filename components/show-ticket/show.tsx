@@ -28,8 +28,8 @@ export default function Show() {
 
   return (
     <>
-      <Card className="w-full rounded-3xl p-4 space-y-4">
-        <CardHeader className="flex flex-row items-center justify-between w-full p-2">
+      <Card className="w-full space-y-4 rounded-3xl p-4">
+        <CardHeader className="flex w-full flex-row items-center justify-between p-2">
           <CardTitle className="text-md">Choose a wallet to verify</CardTitle>
           <ShowMethodExternal />
         </CardHeader>
@@ -39,11 +39,11 @@ export default function Show() {
           <Card className="w-full">
             <CardHeader className="flex-row items-center space-x-4">
               {connectorIcon && (
-                <div className="rounded-lg p-2 px-4 border">
-                  <img src={connectorIcon} className="w-6 h-6" />
+                <div className="rounded-lg border p-2 px-4">
+                  <img src={connectorIcon} className="size-6" />
                 </div>
               )}
-              <div className="flex flex-col truncate select-none overflow-hidden ">
+              <div className="flex select-none flex-col overflow-hidden truncate ">
                 <CardTitle className="text-md">{connector?.name}</CardTitle>
                 <CardDescription>{address}</CardDescription>
               </div>

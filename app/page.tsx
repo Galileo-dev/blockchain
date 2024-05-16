@@ -16,10 +16,10 @@ export default function Home() {
   return (
     <>
       <div className="container mx-auto flex flex-1 flex-col items-center justify-center space-y-2">
-        <div className="w-full rounded-m flex flex-col md:flex-row items-center justify-center overflow-hidden">
-          <div className="w-full md:w-1/2 flex flex-col items-center space-y-4 p-4">
-            <h1 className="text-center text-3xl md:text-4xl font-bold mb-4">
-              Don't Have A Ticket?
+        <div className="rounded-m flex w-full flex-col items-center justify-center overflow-hidden md:flex-row">
+          <div className="flex w-full flex-col items-center space-y-4 p-4 md:w-1/2">
+            <h1 className="mb-4 text-center text-3xl font-bold md:text-4xl">
+              Don&apos;t Have A Ticket?
             </h1>
             <Ticket className="w-[300px]">
               <TicketHeader>
@@ -29,7 +29,7 @@ export default function Home() {
                     width: "250px",
                     height: "250px",
                   }}
-                  className="rounded-sm overflow-hidden"
+                  className="overflow-hidden rounded-sm"
                 >
                   <Image src={photoUrl} alt="Picture of the author" fill />
                 </div>
@@ -37,7 +37,7 @@ export default function Home() {
               <TicketSeparator />
               <TicketFooter>
                 <TicketTitle>Electric Picnic</TicketTitle>
-                <div className="w-full flex gap-2 justify-between items-center">
+                <div className="flex w-full items-center justify-between gap-2">
                   <Button variant="outline" className="flex-1">
                     Details
                   </Button>
@@ -48,8 +48,8 @@ export default function Home() {
               </TicketFooter>
             </Ticket>
           </div>
-          <div className="w-full md:w-1/2 flex flex-col items-center space-y-4 p-4">
-            <h1 className="text-center text-3xl md:text-4xl font-bold mb-4">
+          <div className="flex w-full flex-col items-center space-y-4 p-4 md:w-1/2">
+            <h1 className="mb-4 text-center text-3xl font-bold md:text-4xl">
               Already Have A Ticket?
             </h1>
             <Button size="lg" className="w-full md:w-auto" asChild>
