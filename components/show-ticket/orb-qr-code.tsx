@@ -9,7 +9,12 @@ export interface OrbQRCode {
 export const OrbQRCode = ({ address }: OrbQRCode): ReactElement => {
   const qrCode = useMemo(() => {
     return (
-      <QR rounding={80} cutout cutoutElement={<Rotate3D size="100%" />}>
+      <QR
+        rounding={80}
+        cutout
+        cutoutElement={<Rotate3D size="100%" color="black" />}
+        style={{ background: "white", padding: "16px", borderRadius: "16px" }}
+      >
         {address}
       </QR>
     );

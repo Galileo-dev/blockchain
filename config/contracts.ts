@@ -1,29 +1,18 @@
-import { erc20Abi } from "viem";
+import { Address, erc20Abi } from "viem";
 
-const address = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
+const address = "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512" as Address;
 
-export const ticketToken = {
-  allowFailure: false,
-  contracts: [
-    {
-      address,
-      abi: erc20Abi,
-      functionName: "decimals",
-    },
-    {
-      address,
-      abi: erc20Abi,
-      functionName: "name",
-    },
-    {
-      address,
-      abi: erc20Abi,
-      functionName: "symbol",
-    },
-    {
-      address,
-      abi: erc20Abi,
-      functionName: "totalSupply",
-    },
-  ],
+const buyTicketAbi = {
+  constant: false,
+  inputs: [],
+  name: "buyTicket",
+  outputs: [],
+  payable: true,
+  stateMutability: "payable",
+  type: "function",
 };
+
+export const ticketTokenConfig = {
+  address,
+  abi: [...erc20Abi, buyTicketAbi],
+} as const;

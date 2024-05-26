@@ -20,10 +20,14 @@ import { getAccountFromKeyStore } from "./web3";
 
 export type CustomConnectorParameters = {
   selected?: Address;
+  getPassword?: () => Promise<string>;
 };
 
 customConnector.type = "custom" as const;
-export function customConnector({ selected }: CustomConnectorParameters = {}) {
+export function customConnector({
+  selected,
+  getPassword,
+}: CustomConnectorParameters) {
   type Provider = ReturnType<
     Transport<"custom", {}, EIP1193RequestFn<WalletRpcSchema>>
   >;
@@ -146,8 +150,9 @@ export function customConnector({ selected }: CustomConnectorParameters = {}) {
           );
           if (!wallet) throw new Error("Matching wallet not found.");
 
-          // TODO(): Prompt user to unlock wallet with password
-          const account = await getAccountFromKeyStore(wallet, "ilim");
+          const password = getPassword ? await getPassword() : "";
+          console.log("password", password);
+          const account = await getAccountFromKeyStore(wallet, password);
           const client = await getWalletClient(wagmiConfig);
           const transactionHash = await client.sendTransaction({
             account,

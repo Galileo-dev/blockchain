@@ -11,8 +11,16 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { ticketTokenConfig } from "@/config/contracts";
 import { useEffect, useState } from "react";
-import { useAccount, useDisconnect } from "wagmi";
+import { parseEther } from "viem";
+import {
+  useAccount,
+  useDisconnect,
+  useWaitForTransactionReceipt,
+  useWriteContract,
+  type BaseError,
+} from "wagmi";
 
 export default function Checkout() {
   const { isConnected, connector, address } = useAccount();
@@ -26,6 +34,21 @@ export default function Checkout() {
   }, [connector]);
 
   const isLocalWallet = connector?.id == "custom";
+
+  const { data: hash, error, isPending, writeContract } = useWriteContract();
+
+  function handleSubmit() {
+    writeContract({
+      ...ticketTokenConfig,
+      functionName: "buyTicket",
+      value: parseEther("0.00001"),
+    });
+  }
+
+  const { isLoading: isConfirming, isSuccess: isConfirmed } =
+    useWaitForTransactionReceipt({
+      hash,
+    });
 
   return (
     <>
@@ -65,7 +88,14 @@ export default function Checkout() {
           </Card>
         )}
 
-        <CheckoutSubmit onSubmit={() => {}} />
+        {hash && <div>Transaction Hash: {hash}</div>}
+        {isConfirming && <div>Waiting for confirmation...</div>}
+        {isConfirmed && <div>Transaction confirmed.</div>}
+        {error && (
+          <div>Error: {(error as BaseError).shortMessage || error.message}</div>
+        )}
+
+        <CheckoutSubmit onSubmit={handleSubmit} />
       </Card>
     </>
   );

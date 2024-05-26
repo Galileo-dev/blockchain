@@ -1,4 +1,5 @@
-import { LocalWalletModal } from "@/components/local-wallet-modal";
+import { LocalWalletModal } from "@/components/local-wallet/local-wallet-modal";
+import { LocalWalletPasswordModal } from "@/components/local-wallet/local-wallet-password-modal";
 import { customConnector } from "@/lib/customConnector";
 import { Wallet, Wallets } from "@/types";
 import { createContext, useState } from "react";
@@ -13,6 +14,7 @@ interface LocalWalletContextType {
   isModalOpen: boolean;
   openModal: () => void;
   closeModal: () => void;
+  getPassword: () => Promise<string>;
 }
 
 const LocalWalletContext = createContext<LocalWalletContextType>({
@@ -22,6 +24,7 @@ const LocalWalletContext = createContext<LocalWalletContextType>({
   isModalOpen: false,
   openModal: () => {},
   closeModal: () => {},
+  getPassword: () => Promise.resolve(""),
 });
 
 const LocalWalletProvider = ({ children }: { children: React.ReactNode }) => {
@@ -29,6 +32,10 @@ const LocalWalletProvider = ({ children }: { children: React.ReactNode }) => {
     initializeWithValue: false,
   });
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
+  const [passwordResolver, setPasswordResolver] = useState<
+    ((value: string) => void) | null
+  >(null);
   const { isConnected } = useAccount();
   const { disconnect } = useDisconnect();
   const { connect } = useConnect();
@@ -45,14 +52,40 @@ const LocalWalletProvider = ({ children }: { children: React.ReactNode }) => {
     setIsModalOpen(false);
   };
 
+  const openPasswordModal = () => {
+    setIsPasswordModalOpen(true);
+  };
+
+  const closePasswordModal = () => {
+    setIsPasswordModalOpen(false);
+  };
+
   const connectWallet = async (wallet: Wallet) => {
     if (isConnected) {
       await disconnect();
     }
 
     await connect({
-      connector: customConnector({ selected: wallet.address as Address }),
+      connector: customConnector({
+        selected: wallet.address as Address,
+        getPassword,
+      }),
     });
+  };
+
+  const getPassword = async () => {
+    openPasswordModal();
+    return new Promise<string>((resolve) => {
+      setPasswordResolver(() => resolve);
+    });
+  };
+
+  const handlePasswordSubmit = (values: { password: string }) => {
+    if (passwordResolver) {
+      passwordResolver(values.password);
+      setPasswordResolver(null);
+      closePasswordModal();
+    }
   };
 
   return (
@@ -64,6 +97,10 @@ const LocalWalletProvider = ({ children }: { children: React.ReactNode }) => {
         isModalOpen,
         openModal,
         closeModal,
+        getPassword: async () => {
+          openPasswordModal();
+          return new Promise(() => {});
+        },
       }}
     >
       {children}
@@ -72,6 +109,13 @@ const LocalWalletProvider = ({ children }: { children: React.ReactNode }) => {
           closeModal={closeModal}
           isModalOpen={isModalOpen}
           addLocalWallet={addWallet}
+        />
+      )}
+      {isPasswordModalOpen && (
+        <LocalWalletPasswordModal
+          closeModal={closePasswordModal}
+          isModalOpen={isPasswordModalOpen}
+          onSubmit={handlePasswordSubmit}
         />
       )}
     </LocalWalletContext.Provider>

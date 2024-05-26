@@ -1,4 +1,5 @@
 import { OrbQRCode } from "@/components/show-ticket/orb-qr-code";
+import { ShowTicketBalance } from "@/components/show-ticket/show-ticket-balance";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -34,7 +35,9 @@ export function ShowPopup() {
               Please present your ticket to the scanner
             </SheetDescription>
           </SheetHeader>
+
           <div className="mx-auto grid w-[250px] gap-4 py-4">
+            <ShowTicketBalance address={address} />
             <OrbQRCode address={address} />
           </div>
           <SheetFooter>
