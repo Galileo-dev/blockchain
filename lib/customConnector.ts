@@ -1,5 +1,9 @@
 import { Wallet } from "@/types";
-import { getWalletClient } from "@wagmi/core";
+import {
+  ConnectorNotConnectedError,
+  estimateGas,
+  getWalletClient,
+} from "@wagmi/core";
 import {
   custom,
   fromHex,
@@ -17,6 +21,8 @@ import { rpc } from "viem/utils";
 import { ChainNotConfiguredError, createConnector } from "wagmi";
 import { config as wagmiConfig } from "./config";
 import { getAccountFromKeyStore } from "./web3";
+
+// Based on wagmi mock connector https://github.com/wevm/wagmi/blob/6aff9dec2f7d5b9cbb4e3889019f3e3fe5a61dde/packages/core/src/connectors/mock.ts
 
 export type CustomConnectorParameters = {
   selected?: Address;
@@ -62,6 +68,7 @@ export function customConnector({
       connected = false;
     },
     async getAccounts() {
+      if (!connected) throw new ConnectorNotConnectedError();
       const provider = await this.getProvider();
       const accounts = await provider.request({ method: "eth_accounts" });
       return accounts.map((x) => getAddress(x));
@@ -113,54 +120,59 @@ export function customConnector({
         // eth methods
         if (method === "eth_chainId") return numberToHex(connectedChainId);
         if (method === "eth_requestAccounts") {
-          const localStorageWallets = localStorage.getItem("wallets");
-          if (!localStorageWallets) return [];
-          const accounts = JSON.parse(localStorageWallets).map((x: Wallet) => {
-            return !x.address.startsWith("0x") ? `0x${x.address}` : x.address;
+          const localStorageWallets = getWallets();
+          const accounts = localStorageWallets.map((x: Wallet) => {
+            return convertKeyStoreAddressToHexAddress(x.address);
           });
-
-          if (selected) {
-            const index = accounts.findIndex(
-              (account) => account.toLowerCase() === selected.toLowerCase(),
-            );
-            if (index !== -1) {
-              const [selectedAccount] = accounts.splice(index, 1);
-              accounts.unshift(selectedAccount);
-            }
-          }
+          moveSelectedAccountToTop(accounts, selected);
           console.log("accounts", accounts);
           console.log("selected", selected);
           return accounts;
         }
         if (method === "eth_sendTransaction") {
           type Params = [
-            { from: Hex; to: Hex; value: Hex; gas: Hex; data: Hex },
+            { from: Hex; to: Hex; value: Hex; gas?: Hex; data?: Hex },
           ];
-          const transactionParams = (params as Params)[0];
-          const localStorageWallets = localStorage.getItem("wallets");
-          if (!localStorageWallets)
-            throw new Error("Failed to sign message: No wallets found.");
 
-          const wallet: Wallet = JSON.parse(localStorageWallets).find(
-            (x: Wallet) =>
-              (!x.address.startsWith("0x")
-                ? `0x${x.address}`
-                : x.address
-              ).toLowerCase() === transactionParams.from.toLowerCase(),
-          );
-          if (!wallet) throw new Error("Matching wallet not found.");
+          try {
+            const transactionParams = (params as Params)[0];
+            const localStorageWallets = getWallets();
+            if (localStorageWallets.length === 0)
+              throw new Error("Failed to sign message: No wallets found.");
 
-          const password = getPassword ? await getPassword() : "";
-          console.log("password", password);
-          const account = await getAccountFromKeyStore(wallet, password);
-          const client = await getWalletClient(wagmiConfig);
-          const transactionHash = await client.sendTransaction({
-            account,
-            to: transactionParams.to,
-            value: BigInt(transactionParams.value),
-            gas: BigInt(transactionParams.gas),
-          });
-          return transactionHash;
+            const wallet: Wallet | undefined = localStorageWallets.find(
+              (x: Wallet) =>
+                convertKeyStoreAddressToHexAddress(x.address) ===
+                transactionParams.from.toLowerCase(),
+            );
+
+            if (!wallet) throw new Error("Matching wallet not found.");
+
+            const password = getPassword ? await getPassword() : "";
+            const account = await getAccountFromKeyStore(wallet, password);
+            const client = await getWalletClient(wagmiConfig);
+
+            const gas = transactionParams.gas
+              ? BigInt(transactionParams.gas)
+              : await estimateGas(wagmiConfig, {
+                  account,
+                  to: transactionParams.to,
+                  value: BigInt(transactionParams.value),
+                  data: transactionParams.data,
+                });
+
+            const transactionHash = await client.sendTransaction({
+              account,
+              to: transactionParams.to,
+              value: BigInt(transactionParams.value),
+              gas,
+              data: transactionParams.data,
+            });
+            return transactionHash;
+          } catch (error) {
+            console.error(error);
+            throw new Error("Failed to send transaction");
+          }
         }
         if (method === "eth_signTypedData_v4") {
           // TODO(): Implement this method
@@ -189,4 +201,33 @@ export function customConnector({
       return custom({ request })({ retryCount: 0 });
     },
   }));
+}
+
+// Utils
+
+function moveSelectedAccountToTop(accounts: Address[], selected?: Address) {
+  if (selected) {
+    const index = accounts.findIndex(
+      (account) => account.toLowerCase() === selected.toLowerCase(),
+    );
+    if (index !== -1) {
+      const [selectedAccount] = accounts.splice(index, 1);
+      accounts.unshift(selectedAccount);
+    }
+  }
+}
+
+function convertKeyStoreAddressToHexAddress(address: string): `0x${string}` {
+  const lowerCaseAddress = address.toLowerCase();
+  return (
+    !lowerCaseAddress.startsWith("0x")
+      ? `0x${lowerCaseAddress}`
+      : lowerCaseAddress
+  ) as `0x${string}`;
+}
+
+function getWallets(): Wallet[] {
+  const localStorageWallets = localStorage.getItem("wallets");
+  if (!localStorageWallets) return [];
+  return JSON.parse(localStorageWallets);
 }

@@ -19,6 +19,7 @@ export function ShowTicketBalance({ address }: ShowTicketBalanceProps) {
       <h1 className="text-lg font-bold text-center">
         Ticket Balance: {balance?.toString()}
       </h1>
+      <p className="text-center text-sm text-gray-500">Address: {address}</p>
     </div>
   );
 }
