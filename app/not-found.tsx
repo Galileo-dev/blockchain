@@ -1,4 +1,4 @@
-import Image from "next/image"
+import Image from "next/image";
 
 export default function NotFound() {
   return (
@@ -7,7 +7,7 @@ export default function NotFound() {
         <Image
           unoptimized
           alt="moving gif of confused john travolta"
-          src="/pulp-fiction-john-travolta.gif"
+          src="/images/error/pulp-fiction-john-travolta.gif"
           width={400}
           height={400}
         />
@@ -16,5 +16,5 @@ export default function NotFound() {
         404 - Page Not Found!
       </h2>
     </div>
-  )
+  );
 }

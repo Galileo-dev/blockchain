@@ -10,7 +10,7 @@ import { QrCode } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
-const photoUrl = "/event01.png";
+const photoUrl = "/images/events/ep.png";
 
 export default function Home() {
   return (
