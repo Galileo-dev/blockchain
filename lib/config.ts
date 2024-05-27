@@ -6,6 +6,7 @@ import { localhost, sepolia } from "wagmi/chains";
 
 export const config = createConfig(
   getDefaultConfig({
+    ssr: true,
     chains: [localhost, sepolia],
     walletConnectProjectId: process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID!,
     appName: "Orb",
