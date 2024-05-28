@@ -9,11 +9,16 @@ interface WalletBalanceProps {
 export function WalletBalance(props: WalletBalanceProps) {
   const { data } = useBalance({ ...props });
 
+  const formatAndRoundEther = (value: bigint, decimals: number = 4) => {
+    const etherValue = parseFloat(formatEther(value));
+    return etherValue.toFixed(decimals);
+  };
+
   return (
     <div>
       {data && (
         <h1>
-          {formatEther(data.value)}&nbsp;{data.symbol}
+          {formatAndRoundEther(data.value)}&nbsp;{data.symbol}
         </h1>
       )}
     </div>

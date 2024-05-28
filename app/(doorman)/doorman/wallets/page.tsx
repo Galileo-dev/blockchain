@@ -1,20 +1,41 @@
 "use client";
 
 import { useEffect } from "react";
-import { useDisconnect } from "wagmi";
+import { useAccount, useDisconnect } from "wagmi";
 
-import ExternalWalletCard from "@/app/(doorman)/doorman/wallets/external-wallet-card";
 import InternalWalletCards from "@/app/(doorman)/doorman/wallets/internal-wallet-cards";
 import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import useLocalWallet from "@/hooks/use-local-wallets";
+import { useModal } from "connectkit";
+import { useRouter } from "next/navigation";
 
 export default function Page() {
+  const router = useRouter();
   const { disconnect } = useDisconnect();
+  const { isConnected } = useAccount();
 
   useEffect(() => {
     disconnect();
   }, [disconnect]);
+
+  useEffect(() => {
+    if (isConnected) {
+      router.push(`/doorman/dashboard`);
+    }
+  }, [isConnected, router]);
+
+  const { setOpen } = useModal();
+
+  const show = () => {
+    setOpen(true);
+  };
 
   const { wallets, openModal, connectWallet } = useLocalWallet();
 
@@ -33,7 +54,14 @@ export default function Page() {
         <div className="flex flex-1 flex-col space-y-8 lg:flex-row lg:space-x-12 lg:space-y-0">
           <div className="flex-1 space-y-2">
             <InternalWalletCards wallets={wallets} onClick={connectWallet} />
-            <ExternalWalletCard />
+            <Card>
+              <CardHeader onClick={show}>
+                <CardTitle>Connect external wallet</CardTitle>
+                <CardDescription>
+                  use one of the many options to connect an existing wallet
+                </CardDescription>
+              </CardHeader>
+            </Card>
           </div>
         </div>
       </div>
