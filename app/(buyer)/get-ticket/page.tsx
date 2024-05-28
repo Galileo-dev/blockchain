@@ -1,5 +1,3 @@
-"use client";
-
 import BuyTicket from "@/components/buy-ticket";
 import { ImagePlaceholder } from "@/components/image-placeholder";
 import {
@@ -9,16 +7,8 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import WalletSelector from "@/components/wallet-selector";
-import { useEffect } from "react";
-import { useDisconnect } from "wagmi";
 
 export default function TicketPage() {
-  const { disconnect } = useDisconnect();
-
-  useEffect(() => {
-    disconnect();
-  }, [disconnect]);
-
   return (
     <div className="flex flex-1 flex-col items-center justify-center space-y-2">
       <div className="container mx-auto my-20 flex flex-1 flex-col items-center justify-center space-y-2">
