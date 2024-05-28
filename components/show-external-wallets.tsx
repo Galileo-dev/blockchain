@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { useModal } from "connectkit";
 import { ExternalLink } from "lucide-react";
 
-export function CheckoutMethodExternal() {
+export function ShowExternalWallets() {
   const { setOpen } = useModal();
 
   const show = () => {

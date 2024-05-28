@@ -6,7 +6,7 @@ export interface OrbQRCode {
   address: string;
 }
 
-export const OrbQRCode = ({ address }: OrbQRCode): ReactElement => {
+export const QRCode = ({ address }: OrbQRCode): ReactElement => {
   const qrCode = useMemo(() => {
     return (
       <QR

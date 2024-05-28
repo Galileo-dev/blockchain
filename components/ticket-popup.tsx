@@ -1,5 +1,6 @@
-import { OrbQRCode } from "@/components/show-ticket/orb-qr-code";
-import { ShowTicketBalance } from "@/components/show-ticket/show-ticket-balance";
+"use client";
+
+import { QRCode } from "@/components/qr-code";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -11,10 +12,17 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { useAccount } from "wagmi";
+import { ticketTokenConfig } from "@/config/contracts";
+import { useAccount, useReadContract } from "wagmi";
 
-export function ShowPopup() {
+export function TicketPopup() {
   const { address } = useAccount();
+
+  const { data: balance } = useReadContract({
+    ...ticketTokenConfig,
+    functionName: "balanceOf",
+    args: [address],
+  });
 
   return (
     <Sheet>
@@ -37,8 +45,15 @@ export function ShowPopup() {
           </SheetHeader>
 
           <div className="mx-auto grid w-[250px] gap-4 py-4">
-            <ShowTicketBalance address={address} />
-            <OrbQRCode address={address} />
+            <div>
+              <h1 className="text-center text-lg font-bold">
+                Ticket Balance: {balance?.toString()}
+              </h1>
+              <p className="text-center text-sm text-gray-500">
+                Address: {address}
+              </p>
+            </div>
+            <QRCode address={address} />
           </div>
           <SheetFooter>
             <SheetClose asChild>
