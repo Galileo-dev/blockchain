@@ -1,6 +1,8 @@
 import { Address, erc20Abi } from "viem";
 
-const address = "0x5FbDB2315678afecb367f032d93F642f64180aa3" as Address;
+const address =
+  process.env.NEXT_PUBLIC_TICKET_TOKEN_ADDRESS ??
+  ("0x5FbDB2315678afecb367f032d93F642f64180aa3" as Address); // default on devnet
 
 const buyTicketAbi = {
   constant: false,
