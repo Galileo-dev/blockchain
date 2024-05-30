@@ -2,7 +2,7 @@
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useEffect, useState, type ReactNode } from "react";
-import { State, WagmiProvider } from "wagmi";
+import { WagmiProvider } from "wagmi";
 
 import { ThemeProvider } from "@/components/theme-provider";
 import { devnetMnemonic } from "@/config/devnet-wallets";
@@ -11,10 +11,7 @@ import { config } from "@/lib/config";
 import { generateKeyStoreFromMnemonic } from "@/lib/web3";
 import { ConnectKitProvider } from "connectkit";
 
-export function Providers(props: {
-  children: ReactNode;
-  initialState?: State;
-}) {
+export function Providers(props: { children: ReactNode }) {
   const [queryClient] = useState(() => new QueryClient());
 
   useEffect(() => {
@@ -49,11 +46,11 @@ export function Providers(props: {
   return (
     <ThemeProvider
       attribute="class"
-      defaultTheme="dark"
+      defaultTheme="light"
       enableSystem
       disableTransitionOnChange
     >
-      <WagmiProvider config={config} initialState={props.initialState}>
+      <WagmiProvider config={config}>
         <QueryClientProvider client={queryClient}>
           <ConnectKitProvider theme="midnight">
             <LocalWalletProvider>{props.children}</LocalWalletProvider>
