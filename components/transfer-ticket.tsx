@@ -5,6 +5,7 @@ import { ticketTokenConfig } from "@/config/contracts";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   useAccount,
+  useReadContract,
   useWaitForTransactionReceipt,
   useWriteContract,
   type BaseError,
