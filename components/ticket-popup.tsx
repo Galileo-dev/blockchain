@@ -1,6 +1,5 @@
 "use client";
 
-import { QRCode } from "@/components/qr-code";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -53,7 +52,10 @@ export function TicketPopup() {
                 Address: {address}
               </p>
             </div>
-            <QRCode address={address} />
+            {/* <QRCode address={address} /> */}
+            <h2 className="text-center text-lg font-bold">
+              Transfer to Doorman
+            </h2>
           </div>
           <SheetFooter>
             <SheetClose asChild>
