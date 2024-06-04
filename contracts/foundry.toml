@@ -19,7 +19,7 @@ test = "test"
 fuzz = { runs = 10_000 }
 verbosity = 4
 
-# [etherscan]
+[etherscan]
 #   arbitrum = { key = "${API_KEY_ARBISCAN}" }
 #   avalanche = { key = "${API_KEY_SNOWTRACE}" }
 #   bnb_smart_chain = { key = "${API_KEY_BSCSCAN}" }
@@ -28,7 +28,7 @@ verbosity = 4
 #   mainnet = { key = "${API_KEY_ETHERSCAN}" }
 #   optimism = { key = "${API_KEY_OPTIMISTIC_ETHERSCAN}" }
 #   polygon = { key = "${API_KEY_POLYGONSCAN}" }
-#   sepolia = { key = "${API_KEY_ETHERSCAN}" }
+sepolia = { key = "${API_KEY_ETHERSCAN}" }
 
 [fmt]
 bracket_spacing = true
