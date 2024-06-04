@@ -3,7 +3,6 @@ import { useBalance } from "wagmi";
 
 interface WalletBalanceProps {
   address: `0x${string}` | undefined;
-  chainId: number | undefined;
 }
 
 export function WalletBalance(props: WalletBalanceProps) {
@@ -15,12 +14,12 @@ export function WalletBalance(props: WalletBalanceProps) {
   };
 
   return (
-    <div>
+    <>
       {data && (
-        <h1>
+        <>
           {formatAndRoundEther(data.value)}&nbsp;{data.symbol}
-        </h1>
+        </>
       )}
-    </div>
+    </>
   );
 }

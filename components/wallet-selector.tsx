@@ -1,6 +1,7 @@
 "use client";
 
 import { ShowExternalWallets } from "@/components/show-external-wallets";
+import { TicketBalance } from "@/components/ticket-balance";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -9,6 +10,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { WalletSelectorItems } from "@/components/wallet-selector-items";
+import { WalletBalance } from "@/components/web3/wallet-balance";
 import { useEffect, useState } from "react";
 import { useAccount, useDisconnect } from "wagmi";
 
@@ -66,6 +68,25 @@ export default function WalletSelector({
             </CardHeader>
           </Card>
         )}
+        {address && (
+          <>
+            <div className="flex flex-row items-center justify-between">
+              <div className="flex flex-col space-y-2">
+                <CardTitle className="text-md">Ticket Balance:</CardTitle>
+                <CardDescription>
+                  <TicketBalance address={address} />
+                </CardDescription>
+              </div>
+              <div className="flex flex-col space-y-2 text-right">
+                <CardTitle className="text-md">Sepolia Balance:</CardTitle>
+                <CardDescription>
+                  <WalletBalance address={address} />
+                </CardDescription>
+              </div>
+            </div>
+          </>
+        )}
+
         {children}
       </Card>
     </>

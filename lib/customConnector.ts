@@ -131,7 +131,7 @@ export function customConnector({
         }
         if (method === "eth_sendTransaction") {
           type Params = [
-            { from: Hex; to: Hex; value: Hex; gas?: Hex; data?: Hex },
+            { from: Hex; to: Hex; value?: Hex; gas?: Hex; data?: Hex },
           ];
 
           try {
@@ -152,21 +152,28 @@ export function customConnector({
             const account = await getAccountFromKeyStore(wallet, password);
             const client = await getWalletClient(wagmiConfig);
 
+            console.log("transactionParams", transactionParams);
+
+            const value =
+              transactionParams.value && BigInt(transactionParams.value);
+
             const gas = transactionParams.gas
               ? BigInt(transactionParams.gas)
               : await estimateGas(wagmiConfig, {
                   account,
                   to: transactionParams.to,
-                  value: BigInt(transactionParams.value),
+                  value: value,
                   data: transactionParams.data,
                 });
+
+            console.log("gas", gas);
 
             const transactionHash = await client.sendTransaction({
               account,
               to: transactionParams.to,
-              value: BigInt(transactionParams.value),
-              gas,
+              value,
               data: transactionParams.data,
+              gas,
             });
             return transactionHash;
           } catch (error) {

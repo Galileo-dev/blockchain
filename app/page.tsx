@@ -53,7 +53,7 @@ export default function Home() {
               Already Have A Ticket?
             </h1>
             <Button size="lg" className="w-full md:w-auto" asChild>
-              <Link href="/show-ticket">
+              <Link href="/transfer-ticket">
                 <QrCode className="mr-4" /> Validate Ticket
               </Link>
             </Button>

@@ -16,7 +16,7 @@ export default function TicketPage() {
           <CheckoutItem
             title="Electric Picnic"
             info={["02-09-2024", "Stradbally, Co. Laois"]}
-            price={250}
+            price={0.00001}
           />
           <WalletSelector title="Choose a wallet to buy a ticket">
             <BuyTicket />
@@ -48,7 +48,7 @@ function CheckoutItem({ title, info, price }) {
           </div>
         </div>
         <div className="text-1xl font-semibold leading-none tracking-tight">
-          &euro;{price}
+          {price} ETH
         </div>
       </CardHeader>
     </Card>

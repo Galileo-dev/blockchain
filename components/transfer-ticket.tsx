@@ -26,7 +26,7 @@ import { isAddress } from "viem";
 
 const transferTicketFormSchema = z.object({
   recipient: z.custom((val) => isAddress(val as string), "Invalid Address"),
-  amount: z.number().min(1, "Amount is required"),
+  amount: z.coerce.number().min(1, "Amount is required"),
 });
 
 type TransferTicketFormValues = z.infer<typeof transferTicketFormSchema>;
