@@ -70,8 +70,10 @@ export function SendCryptoForm({
   return (
     <Card className="w-[500px]">
       <CardHeader>
-        <CardTitle>Send Ticket</CardTitle>
-        <CardDescription>Send a ticket</CardDescription>
+        <CardTitle>Send Crypto</CardTitle>
+        <CardDescription>
+          Can be used to send crypto from a doorman wallet back to a venue
+        </CardDescription>
       </CardHeader>
 
       <Form {...form}>

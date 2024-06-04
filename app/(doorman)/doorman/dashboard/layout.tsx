@@ -1,6 +1,7 @@
 "use client";
 
 import { SideNav } from "@/components/side-nav";
+import { TicketBalance } from "@/components/ticket-balance";
 import { Separator } from "@/components/ui/separator";
 import { WalletBalance } from "@/components/web3/wallet-balance";
 import { dashboardConfig } from "@/config/dashboard";
@@ -29,8 +30,11 @@ export default function RootLayout({
           <div className="flex flex-1 justify-center">
             <h2 className="text-2xl font-bold tracking-tight">{address}</h2>
           </div>
+          <div className="mr-8 flex">
+            <TicketBalance address={address} />
+          </div>
           <div className="flex justify-end">
-            <WalletBalance address={address} chainId={chain?.id} />
+            <WalletBalance address={address} />
           </div>
         </div>
         <Separator className="w-9/10 my-2" />

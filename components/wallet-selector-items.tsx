@@ -43,11 +43,7 @@ export function WalletSelectorItems() {
           />
         ))}
       </RadioGroup>
-      <WalletSelectorItem
-        title="Add verify wallet"
-        icon="Plus"
-        onClick={openModal}
-      />
+      <WalletSelectorItem title="Add wallet" icon="Plus" onClick={openModal} />
     </Card>
   );
 }

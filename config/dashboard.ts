@@ -8,9 +8,9 @@ export const dashboardConfig: DashboardConfig = {
       icon: "ScanBarcode",
     },
     {
-      title: "Send Ticket",
-      href: "/doorman/dashboard/send-ticket",
-      icon: "TicketPlus",
+      title: "Send Crypto",
+      href: "/doorman/dashboard/send-crypto",
+      icon: "Send",
     },
     {
       title: "Change Wallet",
