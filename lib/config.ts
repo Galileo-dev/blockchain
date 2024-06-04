@@ -2,16 +2,21 @@ import { getDefaultConfig } from "connectkit";
 import { createConfig, http } from "wagmi";
 import { localhost, sepolia } from "wagmi/chains";
 
+const isLocalhost = process.env.NODE_ENV === "development";
+
 export const config = createConfig(
   getDefaultConfig({
     ssr: true,
-    chains: [localhost, sepolia],
+    chains: isLocalhost ? [localhost] : [sepolia],
     walletConnectProjectId: process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID!,
     appName: "Orb",
-    transports: {
-      [localhost.id]: http(),
-      [sepolia.id]: http(),
-    },
+    transports: isLocalhost
+      ? {
+          [localhost.id]: http(),
+        }
+      : {
+          [sepolia.id]: http(),
+        },
   }),
 );
 
