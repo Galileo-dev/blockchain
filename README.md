@@ -32,7 +32,7 @@ This project involves the creation of a Web3 Distributed Application (DApp) that
 
 ## Introduction
 
-This project demonstrates a potential use case for blockchain technology in event management, explicitly ticketing systems. The DApp allows users to create local wallets, check their balance, purchase tickets, and transfer tickets back to the vendor. All deployed on the sepolia testnet
+This project demonstrates a potential use case for blockchain technology in event management, explicitly ticketing systems. The DApp allows users to create local wallets, check their balance, purchase tickets, and transfer tickets back to the vendor. All deployed on the Sepolia Testnet.
 
 ## Front End Design
 
@@ -41,6 +41,9 @@ I have changed the design of the front end from the description of the project s
 - the wallet creation is available through a dialogue box. when selecting a wallet
 - the balance check page is available after selecting a wallet
 - the doorman has a view where they can check other user balances and make SETH transactions.
+- I chose to use [Wagmi](https://wagmi.sh/) to handle blockchain interactions; this meant I had to create a [custom connector](lib/customConnector.ts) to splice Wagmi and Web3js together. This custom connector is based on [wagmi mock connector](https://github.com/wevm/wagmi/blob/6aff9dec2f7d5b9cbb4e3889019f3e3fe5a61dde/packages/core/src/connectors/mock.ts).
+  **Security Risks:**
+  - The project spec forces me to use the keystore file in the web app; however, for an actual application, the user can not assume the application won't just steal their funds. It's essential only to use services like metamask, walletconnect, etc. This is because the decrypted keystore file contains the account's private key, which a malicious app could use to steal funds.
 
 ### Wallet Creation Page
 
@@ -51,7 +54,8 @@ I have changed the design of the front end from the description of the project s
 - **Implementation:**
   1. Use Web3js to generate a new wallet. [code here](components/web3/new-wallet-dialog.tsx)
   2. Save the generated keystore file to local storage and offer a download link. [code here](components/web3/new-wallet-dialog.tsx)
-  3. When the wallet is selected from the radio selection, the wallet details will be displayed along with its SETH and Ticket Balance.
+  3. Custom connector reads the keystore file from local storage and decrypts it when needed (requires a password prompt). [code here](lib/customConnector.ts)
+  4. When the wallet is selected from the radio selection, its details will be displayed along with its SETH and Ticket Balance.
 
 ### Balance Check Page
 
@@ -62,30 +66,37 @@ I have changed the design of the front end from the description of the project s
   - Users can check their balance after they select a wallet.
   - Doormans can check their balance after they select a wallet.
   - The doorman can check other users' balances by entering their address in the doorman balance check form.
+  - The venue would use the same view as the doorman, which would offer the ability to check totalSupply and make SETH transactions.
 
 ### Ticket Purchase Page
 
 - **Functionality:**
   - [x] Allow users to buy tickets (tokens) using Sepolia Ethereum (SETH).
 - **Implementation:**
-  - I chose to use [Wagmi](https://wagmi.sh/) to handle blockchain interactions; this meant I had to create a [custom connector](lib/customConnector.ts) to splice Wagmi and Web3js together. This custom connector is based on [wagmi mock connector](https://github.com/wevm/wagmi/blob/6aff9dec2f7d5b9cbb4e3889019f3e3fe5a61dde/packages/core/src/connectors/mock.ts).
   - User can choose a local or external wallet (Metamask, Walletconnect, etc).
   - Once the user hits the buy button:
     - if the user is using a local wallet, they will be prompted to give their password (this is done so that wallet private keys are stored encrypted at rest in local storage).
-    - If they use a Wagmi wallet, they will be prompted to approve the transaction using their wallet of choice.
+    - If they use an external wallet, they will be prompted to approve the transaction using their wallet of choice.
   - Sign the transaction and send it to the Sepolia Testnet.
   - Wait for the transaction to be mined and display the transaction hash.
-- **Security Risks:**
-  - The project specs force us to use the keystore file in the web app; however, for a real application, the user can not assume the application won't just steal their funds. It's important only to use services like metamask, walletconnect, etc. This is because the decrypted keystore file contains the account's private key, which a malicious app could use to steal funds.
+  - Display the transaction as successful or failed.
 
 ### Ticket Transfer Page
 
 - **Functionality:**
   - [x] Allow users to transfer tickets back to the vendor.
 - **Implementation:**
-  - Uses the same Wagmi connector as the ticket purchase page, meaning it also has the same security risks.
+  - User can choose a local or external wallet (Metamask, Walletconnect, etc).
+  - The user can enter the address of the doorman to transfer the ticket.
+  - Users can enter the amount of tickets they want to transfer.
+  - Once the user hits the transfer button:
+    - if the user is using a local wallet, they will be prompted to give their password (this is done so that wallet private keys are stored encrypted at rest in local storage).
+    - If they use an external wallet, they will be prompted to approve the transaction using their wallet of choice.
   - Wagmi offers a `useContract` hook that allows us to call the contract functions.
-  - The `transfer` function is called with the address of the doorman as the recipient.
+    - The `transfer` function on our erc20 contract is called with the address of the doorman as the recipient. [contract code here](contracts/src/tokens/ERC20.sol)
+  - Sign the transaction and send it to the Sepolia Testnet.
+  - Wait for the transaction to be mined and display the transaction hash.
+  - Display the transaction as successful or failed.
 
 ## Blockchain Backend
 
@@ -111,17 +122,27 @@ I have changed the design of the front end from the description of the project s
 
 ### Front End Code
 
-- **HTML, CSS, JavaScript:**
+- **Web3:**
   - [x] Wallet creation logic.
+    - Handled by web3js and a custom connector for Wagmi.
   - [x] Balance display logic.
+    - Wagmi offers various hooks to interact with the blockchain, including `useContract` and `useBalance`.
   - [x] Ticket purchase and transfer logic.
+    - Extend the standard ERC20 ABI to include custom functions for ticket purchases, `buyTicket`
+- **Shadcn:**
+  - Components in `/components/ui` are imported from [Shadcn UI](https://ui.shadcn.com/) (these are not components I created, This is just how Shadcn UI imports components).
+    - Exceptions:
+      - [Ticket](components/ui/ticket.tsx) - a custom card component to resemble a ticket (based off the [shadcn card component](components/ui/card.tsx)).
 
 ### Smart Contract Code
 
+Boilerplate: [foundry-template](https://github.com/PaulRBerg/foundry-template)
+
 - **Solidity:**
-  - ERC-20 compliant contract.
-  - Custom functions for the ticketing system.
-    - A `buyTicket` function to purchase tickets at a set price (0.00001 SETH).
+  - [x] ERC-20 compliant contract. [code here](contracts/src/tokens/ERC20.sol)
+  - [x] Test cases for the contract. [code here](contracts/test/TicketToken.t.sol)
+  - [x] Custom functions for the ticketing system.
+    - A `buyTicket` function to purchase tickets at a set price (0.00001 SETH). [abi extended code](config/contracts.ts) [contract code here](contracts/src/tokens/ERC20.sol)
 
 ## Design Description
 
@@ -135,14 +156,15 @@ I have changed the design of the front end from the description of the project s
   - Backend using Solidity smart contracts deployed on Sepolia Testnet:
     - [Foundry](https://github.com/foundry-rs/foundry)
       - Foundry offered various tools that allowed me to quickly develop, test and deploy my smart contract to a devnet on `localhost`. This meant I could test changes without deploying to the Sepolia Testnet.
+        - I implemented tests for the smart contract to ensure it was working before deploying to the Sepolia Testnet [tests here](contracts/test/TicketToken.t.sol).
       - The ERC-20 contract was based on [solmate's ERC20](https://github.com/transmissions11/solmate/blob/c892309933b25c03d32b1b0d674df7ae292ba925/src/tokens/ERC20.sol). This contract has been designed to use the minimum amount of gas possible:
         - minimizes the use of `require` statements to save gas.
         - `unchecked` has been used for arithmetic operations where an overflow can't occur.
         - avoid state changes when allowance is set to max.
 - **Workflow:**
-  - User has the choice of purchasing a ticket, verifying their balance or returning a ticket to the doorman.
+  - Users can purchase a ticket, verify their balance, or return a ticket to the doorman.
   - Ticket purchase:
-    - Users can choose from a local wallet or an external wallet (Metamask, Walletconnect, etc.).
+    - Users can choose from a local or external wallet (Metamask, Walletconnect, etc.).
     - The user can then purchase a ticket using the buy button
   - Verify balance:
     - User can check their balance after they select a wallet.
@@ -185,6 +207,19 @@ pnpm dev
 # or
 bun dev
 ```
+
+The dev server should be available at [http://localhost:3000](http://localhost:3000).
+by default, the project will try to use the localhost devnet unless a `NEXT_PUBLIC_TICKET_TOKEN_ADDRESS` is specified in the `.env.local` file.
+
+To use my deployed contract and for external wallets to work, please add the following to your `.env.local` file (if not already present):
+
+```bash
+NEXT_PUBLIC_TICKET_TOKEN_ADDRESS="0xd3C95400B76394f9923C72C017b2f603dc5069A5"
+# needed for wagmi
+NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID="8fd464d7ddcfb097ed3c539bfadc0123"
+```
+
+Deploying
 
 ## Conclusion
 
