@@ -27,7 +27,6 @@ This project involves the creation of a Web3 Distributed Application (DApp) that
   - [Design Description](#design-description)
   - [Transaction Links](#transaction-links)
   - [Instructions to Run the Project](#instructions-to-run-the-project)
-  - [Conclusion](#conclusion)
   - [Screenshots](#screenshots)
 
 ## Introduction
@@ -240,10 +239,6 @@ SEPOLIA_RPC_URL=https://sepolia.infura.io/v3/e64e0f234c6c45a3b55011391da6fe61
 ** Troubleshooting **
 
 - Keep in mind the `/contract` directory has it's own readme create from the boilerplate which offers detailed instructions on how to use foundry to test and deploy to anvil.
-
-## Conclusion
-
-This project successfully demonstrates the creation of a Web3 DApp for a ticketing system, leveraging blockchain technology to provide a secure and transparent solution for event management. The implementation includes wallet creation, balance checking, ticket purchasing, and ticket transferring functionalities.
 
 ## Screenshots
 
