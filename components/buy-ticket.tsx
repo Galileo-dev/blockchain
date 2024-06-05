@@ -43,7 +43,6 @@ export default function BuyTicket() {
     <>
       <div>Price: 0.00001 ETH</div>
       {estimateGas && <div>Estimated Gas: {formatGwei(estimateGas)} Gwei</div>}
-      {gasPrice && <div>Gas Price: {formatGwei(gasPrice)} Gwei</div>}
       {hash && <div>Transaction Hash: {hash}</div>}
       {isConfirming && <div>Waiting for confirmation...</div>}
       {isConfirmed && <div>Transaction confirmed.</div>}

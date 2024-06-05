@@ -25,6 +25,7 @@ This project involves the creation of a Web3 Distributed Application (DApp) that
   - [Transaction Links](#transaction-links)
   - [Instructions to Run the Project](#instructions-to-run-the-project)
   - [Conclusion](#conclusion)
+  - [Screenshots](#screenshots)
 
 ## Introduction
 
@@ -185,3 +186,16 @@ bun dev
 ## Conclusion
 
 This project successfully demonstrates the creation of a Web3 DApp for a ticketing system, leveraging blockchain technology to provide a secure and transparent solution for event management. The implementation includes wallet creation, balance checking, ticket purchasing, and ticket transferring functionalities.
+
+## Screenshots
+
+| Screenshot          | Image                                                                             |
+| ------------------- | --------------------------------------------------------------------------------- |
+| Buy Ticket          | ![Buy Ticket](screenshots/buy-ticket.png "Buy Ticket")                            |
+| Doorman Send Crypto | ![Doorman Send Crypto](screenshots/doorman-send-crypto.png "Doorman Send Crypto") |
+| Import Wallet       | ![Import Wallet](screenshots/import-wallet.png "Import Wallet")                   |
+| Create Wallet       | ![Create Wallet](screenshots/create-wallet.png "Create Wallet")                   |
+| Doorman Wallet      | ![Doorman Wallet](screenshots/doorman-wallet.png "Doorman Wallet")                |
+| Homepage            | ![Homepage](screenshots/homepage.png "Homepage")                                  |
+| Meta Mask Example   | ![Meta Mask Example](screenshots/meta-mask-example.png "Meta Mask Example")       |
+| Validate Ticket     | ![Validate Ticket](screenshots/validate-ticket.png "Validate Ticket")             |
