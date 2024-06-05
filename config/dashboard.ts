@@ -13,6 +13,11 @@ export const dashboardConfig: DashboardConfig = {
       icon: "Send",
     },
     {
+      title: "Token Details",
+      href: "/doorman/dashboard/ticket-details",
+      icon: "Ticket",
+    },
+    {
       title: "Change Wallet",
       href: "/doorman/wallets",
       icon: "ArrowLeft",

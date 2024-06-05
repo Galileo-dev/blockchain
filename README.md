@@ -219,7 +219,12 @@ NEXT_PUBLIC_TICKET_TOKEN_ADDRESS="0xd3C95400B76394f9923C72C017b2f603dc5069A5"
 NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID="8fd464d7ddcfb097ed3c539bfadc0123"
 ```
 
-Deploying
+Deploying the smart contract is a bit more involved:
+
+1. Install the foundry CLI [guide here](https://book.getfoundry.sh/getting-started/installation)
+2. set the .env file to contain the following
+
+```bash
 
 ## Conclusion
 
@@ -237,3 +242,4 @@ This project successfully demonstrates the creation of a Web3 DApp for a ticketi
 | Homepage            | ![Homepage](screenshots/homepage.png "Homepage")                                  |
 | Meta Mask Example   | ![Meta Mask Example](screenshots/meta-mask-example.png "Meta Mask Example")       |
 | Validate Ticket     | ![Validate Ticket](screenshots/validate-ticket.png "Validate Ticket")             |
+```

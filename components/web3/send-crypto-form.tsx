@@ -119,16 +119,22 @@ export function SendCryptoForm({
                 estimateGasError={estimateGasError as BaseError}
               />
             </CardContent>
-            <CardFooter className="flex justify-between">
+            <CardFooter className="flex flex-col">
               <Button type="submit">Send &rarr;</Button>
-              {hash && <div className="truncate">Transaction Hash: {hash}</div>}
-              {isConfirming && <div>Waiting for confirmation...</div>}
-              {isConfirmed && <div>Transaction confirmed.</div>}
-              {transactionError && (
-                <AlertError>
-                  {(transactionError as BaseError).shortMessage}
-                </AlertError>
-              )}
+              <div className="mt-4 space-y-2">
+                {hash && (
+                  <div className="max-w-full truncate">
+                    Transaction Hash: {hash}
+                  </div>
+                )}
+                {isConfirming && <div>Waiting for confirmation...</div>}
+                {isConfirmed && <div>Transaction confirmed.</div>}
+                {transactionError && (
+                  <AlertError>
+                    {(transactionError as BaseError).shortMessage}
+                  </AlertError>
+                )}
+              </div>
             </CardFooter>
           </div>
         </form>
