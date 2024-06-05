@@ -257,7 +257,3 @@ This project successfully demonstrates the creation of a Web3 DApp for a ticketi
 | Homepage            | ![Homepage](screenshots/homepage.png "Homepage")                                  |
 | Meta Mask Example   | ![Meta Mask Example](screenshots/meta-mask-example.png "Meta Mask Example")       |
 | Validate Ticket     | ![Validate Ticket](screenshots/validate-ticket.png "Validate Ticket")             |
-
-```
-
-```
