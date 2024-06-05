@@ -40,6 +40,7 @@ type TransactionFormValues = z.infer<typeof transactionFormSchema>;
 interface SendCryptoFormProps {
   onSubmit: (values: TransactionFormValues) => void;
   onChange: (values: TransactionFormValues) => void;
+  hash?: string;
   isConfirming: boolean;
   isConfirmed: boolean;
   transactionError: SendTransactionErrorType | null;
@@ -50,6 +51,7 @@ interface SendCryptoFormProps {
 export function SendCryptoForm({
   onSubmit,
   onChange,
+  hash,
   isConfirming,
   isConfirmed,
   transactionError,
@@ -117,8 +119,9 @@ export function SendCryptoForm({
                 estimateGasError={estimateGasError as BaseError}
               />
             </CardContent>
-            <CardFooter>
+            <CardFooter className="flex justify-between">
               <Button type="submit">Send &rarr;</Button>
+              {hash && <div className="truncate">Transaction Hash: {hash}</div>}
               {isConfirming && <div>Waiting for confirmation...</div>}
               {isConfirmed && <div>Transaction confirmed.</div>}
               {transactionError && (

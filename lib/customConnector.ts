@@ -11,6 +11,7 @@ import {
   numberToHex,
   RpcRequestError,
   SwitchChainError,
+  UserRejectedRequestError,
   type Address,
   type EIP1193RequestFn,
   type Hex,
@@ -149,10 +150,17 @@ export function customConnector({
             if (!wallet) throw new Error("Matching wallet not found.");
 
             const password = getPassword ? await getPassword() : "";
-            const account = await getAccountFromKeyStore(wallet, password);
-            const client = await getWalletClient(wagmiConfig);
 
-            console.log("transactionParams", transactionParams);
+            let account;
+            try {
+              account = await getAccountFromKeyStore(wallet, password);
+            } catch (error) {
+              throw new UserRejectedRequestError(
+                new Error("Failed to sign message: Invalid password."),
+              );
+            }
+
+            const client = await getWalletClient(wagmiConfig);
 
             const value =
               transactionParams.value && BigInt(transactionParams.value);
@@ -166,8 +174,6 @@ export function customConnector({
                   data: transactionParams.data,
                 });
 
-            console.log("gas", gas);
-
             const transactionHash = await client.sendTransaction({
               account,
               to: transactionParams.to,
@@ -178,7 +184,7 @@ export function customConnector({
             return transactionHash;
           } catch (error) {
             console.error(error);
-            throw new Error("Failed to send transaction");
+            throw new RpcRequestError({ body: { method, params }, error, url });
           }
         }
         if (method === "eth_signTypedData_v4") {
@@ -224,7 +230,9 @@ function moveSelectedAccountToTop(accounts: Address[], selected?: Address) {
   }
 }
 
-function convertKeyStoreAddressToHexAddress(address: string): `0x${string}` {
+export function convertKeyStoreAddressToHexAddress(
+  address: string,
+): `0x${string}` {
   const lowerCaseAddress = address.toLowerCase();
   return (
     !lowerCaseAddress.startsWith("0x")

@@ -3,6 +3,7 @@
 import { Card, CardDescription, CardHeader } from "@/components/ui/card";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import useLocalWallet from "@/hooks/use-local-wallets";
+import { convertKeyStoreAddressToHexAddress } from "@/lib/customConnector";
 import { Wallet } from "@/types";
 import { icons } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -34,7 +35,8 @@ export function WalletSelectorItems() {
         {wallets.map((wallet) => (
           <WalletSelectorItem
             key={wallet.address}
-            title={wallet.address}
+            title={convertKeyStoreAddressToHexAddress(wallet.address)}
+            value={wallet.address}
             icon="Wallet"
             isSelect={true}
             onClick={() => {
@@ -43,12 +45,17 @@ export function WalletSelectorItems() {
           />
         ))}
       </RadioGroup>
-      <WalletSelectorItem title="Add wallet" icon="Plus" onClick={openModal} />
+      <WalletSelectorItem
+        title="Add wallet"
+        value=""
+        icon="Plus"
+        onClick={openModal}
+      />
     </Card>
   );
 }
 
-function WalletSelectorItem({ title, isSelect = false, icon, onClick }) {
+function WalletSelectorItem({ title, value, isSelect = false, icon, onClick }) {
   const Icon = icon && icons[icon];
 
   return (
@@ -65,7 +72,7 @@ function WalletSelectorItem({ title, isSelect = false, icon, onClick }) {
         {title}
       </CardDescription>
       <div className="flex-1" />
-      {isSelect && <RadioGroupItem value={title} />}
+      {isSelect && <RadioGroupItem value={value} />}
     </CardHeader>
   );
 }

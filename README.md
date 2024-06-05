@@ -100,7 +100,7 @@ I have changed the design of the project but it still meets all of the requireme
   - [0xd3C95400B76394f9923C72C017b2f603dc5069A5]
 - **Holding Wallets:**
   - Contract Creator: [0x2bD9d720D21515909702569E6dF9BcdfD53B8711]
-  - Ticket Purchaser: [0x2bD9d720D21515909702569E6dF9BcdfD53B8711]
+  - Ticket Purchaser: [0x64e7B67c53C441B483f76193eF6Acc23278414D4]
   - Vendor / Doorman: [0x2bD9d720D21515909702569E6dF9BcdfD53B8711]
 
 ## Code Overview
@@ -153,7 +153,7 @@ I have changed the design of the project but it still meets all of the requireme
   - [Link](https://sepolia.etherscan.io/tx/0x6cf8b9d9fb9e4acd88756cc359bf6e57eacbfe81c815335d16a4aebea7e5ef82)
 - **Wallet Top-Up Transactions:**
   - Contract Creator: [Link](https://sepolia.etherscan.io/tx/0x3bc234eca7e22e207e399733b84060587532b100e80d8f486e4da532d3c09dad)
-  - Ticket Purchaser: [Link]()
+  - Ticket Purchaser: [Link](https://sepolia.etherscan.io/tx/0x301bbc2888cc85846b9b323a3d80661bd1fe11d3cc09def3df2b6d58c0aaaf8d)
   - Vendor / Doorman: [Link]()
 
 ## Instructions to Run the Project
