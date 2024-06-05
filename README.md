@@ -225,6 +225,21 @@ Deploying the smart contract is a bit more involved:
 2. set the .env file to contain the following
 
 ```bash
+API_KEY_INFURA=e64e0f234c6c45a3b55011391da6fe61
+PRIVATE_KEY=CONTRACT_OWNER_PRIVATE_KEY
+ETHERSCAN_API_KEY=C7DR9BD5K495KVFS7GBN641M3V2MGVWHX3
+SEPOLIA_RPC_URL=https://sepolia.infura.io/v3/e64e0f234c6c45a3b55011391da6fe61
+```
+
+3. Run the following commands to deploy the contract
+
+```bash
+./scripts/deploy-contract.sh
+```
+
+** Troubleshooting **
+
+- Keep in mind the `/contract` directory has it's own readme create from the boilerplate which offers detailed instructions on how to use foundry to test and deploy to anvil.
 
 ## Conclusion
 
@@ -242,4 +257,7 @@ This project successfully demonstrates the creation of a Web3 DApp for a ticketi
 | Homepage            | ![Homepage](screenshots/homepage.png "Homepage")                                  |
 | Meta Mask Example   | ![Meta Mask Example](screenshots/meta-mask-example.png "Meta Mask Example")       |
 | Validate Ticket     | ![Validate Ticket](screenshots/validate-ticket.png "Validate Ticket")             |
+
+```
+
 ```
